@@ -1,0 +1,26 @@
+input:-moz-read-only { /* For Firefox */
+    background-color: #f2f2f2;
+}
+
+input:read-only { 
+    background-color: #f2f2f2;
+}
+
+.boosting
+{
+	background-color: #e6ffe6;
+}
+.hindering
+{
+	background-color: #ffe6e6;
+}
+
+.neutral
+{
+	background-color: #ffffff;
+}
+
+.minmaxlbl
+{
+	color: #ff6b6b;
+}
