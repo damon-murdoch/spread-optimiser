@@ -6,6 +6,67 @@ input:read-only {
     background-color: #f2f2f2;
 }
 
+#head
+{
+	text-align: center;
+}
+
+#title
+{
+	display: inline-block;
+}
+
+#body
+{
+	text-align: center;
+}
+
+.menu
+{
+	padding-top: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	
+	margin-top: 1%;
+	width: 40%;
+	background-color: #99ccff;
+	display: inline-block;
+	
+	border-radius: 5px;
+}
+
+#select-menu {}
+
+#select-pokemon 
+{
+	float:left;
+}
+
+#select-level 
+{
+	float:right;
+}
+
+#table-menu {}
+
+.field-input
+{
+	width:95%;
+}
+
+.ev-title {}
+
+.ev-subtitle
+{
+	font-size: 8pt;
+	color: darkblue;
+}
+
+.select
+{
+	font-size: 14px;
+}
+
 .boosting
 {
 	background-color: #e6ffe6;

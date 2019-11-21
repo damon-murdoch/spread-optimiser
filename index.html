@@ -47,6 +47,350 @@
 	</head>
 	<body>
 		<div id="head">
+			<div id="title">
+				<h2>
+					Pokemon EV Spread Optimiser 
+				</h2>
+				<h4>
+					Made by 
+					<a href= "https://twitter.com/SirScrubbington">
+						@SirScrubbington 
+					</a>
+				</h4>
+			</div>
+		</div>
+		<div id="body">
+			<div class='menu' id='select-menu'>
+				<div id='select-pokemon'>
+					<form id='select-pokemon-form'>
+						<input id='pokemon' type='text' name='search' placeholder='Current: (Pokemon)'>
+						<label>
+							Pokemon
+						</label>
+					</form>
+				</div>
+				<div id='select-sprite'>
+					<!-- Javascript-populated icon sprite of active Pokemon -->
+				</div>
+				<div id='select-level'>
+					<form id='select-level-form'>
+						<label>
+							Level
+						</label>
+						<input id='level' type='number' min='1' max='100' name='level' placeholder='Current: (Level)'>
+					</form>
+				</div>
+			</div>
+			</br> <!-- TODO: Fix this using CSS -->
+			<div class='menu' id='table-menu'>
+				<form id='table-form' autocomplete='off'>
+					<table class='table'>
+						<tr>
+							<th scope="col"> 
+								Field 
+							</th>
+							<th scope="col"> 
+								HP 
+							</th>
+							<th scope="col"> 
+								Atk 
+							</th>
+							<th scope="col"> 
+								Def 
+							</th>
+							<th scope="col"> 
+								SpA 
+							</th>
+							<th scope="col"> 
+								SpD 
+							</th>
+							<th scope="col"> 
+								Spe 
+							</th>
+						</tr>
+						<tr>
+							<th> 
+								Base 
+							</th>
+							<td>
+								<input type = "text" name = "hp-base" id = "hp-base" value = "" class = "field-input" readonly>
+							</td>
+							<td>
+								<input type = "text" name = "at-base" id = "at-base" value = "" class = "field-input" readonly>
+							</td>
+							<td>
+								<input type = "text" name = "df-base" id = "df-base" value = "" class = "field-input" readonly>
+							</td>
+							<td>
+								<input type = "text" name = "sa-base" id = "sa-base" value = "" class = "field-input" readonly>
+							</td>
+							<td>
+								<input type = "text" name = "sd-base" id = "sd-base" value = "" class = "field-input" readonly>
+							</td>
+							<td>
+								<input type = "text" name = "sp-base" id = "sp-base" value = "" class = "field-input" readonly>
+							</td>
+						</tr>
+						<tr>
+							<th scope="col"> 
+								Nature 
+							</th>
+							<td scope="col">
+								<select class='select field-input' id = "nature-select" onChange = "setNature()">
+									<option class='nature-option' value='hardy'> 
+										Hardy 
+									</option>
+									<option class='nature-option' value='lonely'> 
+										Lonely 
+									</option>
+									<option class='nature-option' value='brave'> 
+										Brave 
+									</option>
+									<option class='nature-option' value='adamant'> 
+										Adamant 
+									</option>
+									<option class='nature-option' value='naughty'> 
+										Naughty 
+									</option>
+									<option class='nature-option' value='bold'> 
+										Bold 
+									</option>
+									<option class='nature-option' value='docile'> 
+										Docile 
+									</option>
+									<option class='nature-option' value='relaxed'> 
+										Relaxed 
+									</option>
+									<option class='nature-option' value='impish'> 
+										Impish 
+									</option>
+									<option class='nature-option' value='lax'> 
+										Lax 
+									</option>
+									<option class='nature-option' value='timid'> 
+										Timid 
+									</option>
+									<option class='nature-option' value='hasty'> 	
+										Hasty 
+									</option>
+									<option class='nature-option' value='serious'> 
+										Serious 
+									</option>
+									<option class='nature-option' value='jolly'> 
+										Jolly 
+									</option>
+									<option class='nature-option' value='naive'> 
+										Naive 
+									</option>
+									<option class='nature-option' value='modest'> 
+										Modest 
+									</option>
+									<option class='nature-option' value='mild'> 
+										Mild 
+									</option>
+									<option class='nature-option' value='quiet'> 
+										Quiet 
+									</option>
+									<option class='nature-option' value='bashful'> 
+										Bashful 
+									</option>
+									<option class='nature-option' value='rash'> 
+										Rash 
+									</option>
+									<option class='nature-option' value='calm'> 
+										Calm 
+									</option>
+									<option class='nature-option' value='gentle'> 
+										Gentle 
+									</option>
+									<option class='nature-option' value='sassy'> 
+										Sassy 
+									</option>
+									<option class='nature-option' value='careful'> 
+										Careful 
+									</option>
+									<option class='nature-option' value='quirky'> 
+										Quirky 
+									</option>
+								</select>
+							</td>
+							<td scope="col">
+								<select class='select field-input' id = "atkSelect" onChange = "updateNature('atk')">
+									<option class="boosting" value="boosting"> 
+										Boosting
+									</option>
+									<option class="neutral" id="atkDefault" value="neutral" selected="selected"> 
+										Neutral
+									</option>
+									<option class="hindering" value="hindering"> 
+										Hindering 
+									</option>
+								</select>
+							</td>
+							<td scope="col">
+								<select class='select field-input' id="defSelect" onChange = "updateNature('def')">
+									<option class="boosting field-input"  value="boosting"> 
+										Boosting
+									</option>
+									<option class="neutral field-input"  id="defDefault" value="neutral" selected="selected"> 
+										Neutral
+									</option>
+									<option class="hindering field-input"  value="hindering"> 
+										Hindering
+									</option>
+								</select>
+							</td>
+							<td scope="col">
+								<select class='select field-input' id="spaSelect" onChange = "updateNature('spa')">
+									<option class="boosting field-input"  value="boosting"> 
+										Boosting
+									</option>
+									<option class="neutral field-input"  id="spaDefault" value="neutral" selected="selected"> 
+										Neutral
+									</option>
+									<option class="hindering field-input"  value="hindering">
+										Hindering
+									</option>
+								</select>
+							</td>
+							<td scope="col" >
+								<select class='select field-input' id="spdSelect" onChange = "updateNature('spd')">
+									<option class="boosting field-input"  value="boosting"> 
+										Boosting
+									</option>
+									<option class="neutral field-input"  id="spdDefault" value="neutral" selected="selected">
+										Neutral
+									</option>
+									<option class="hindering field-input" value="hindering"> 
+										Hindering
+									</option>
+								</select>
+							</td>
+							<td scope="col">
+								<select class='select field-input' id="speSelect" onChange = "updateNature('spe')">
+									<option class="boosting field-input"  value="boosting"> 
+										Boosting
+										</option>
+									<option class="neutral field-input"  id="speDefault" value="neutral" selected="selected"> 
+										Neutral
+									</option>
+									<option class="hindering field-input" value="hindering"> 
+										Hindering
+									</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th scope='row' class='ev-title'>
+								IVs
+							</th>
+							<td>
+								<input onkeyup='' type='number' min='0' max='31' value='31' name='hp-iv' id='hp-iv' class='field-input'>
+							</td>
+							<td>
+								<input onkeyup='' type='number' min='0' max='31' value='31' name='at-iv' id='at-iv' class='field-input'>
+							</td>
+							<td>
+								<input onkeyup='' type='number' min='0' max='31' value='31' name='df-iv' id='df-iv' class='field-input'>
+							</td>
+							<td>
+								<input onkeyup='' type='number' min='0' max='31' value='31' name='sa-iv' id='sa-iv' class='field-input'>
+							</td>
+							<td>
+								<input onkeyup='' type='number' min='0' max='31' value='31' name='sd-iv' id='sd-iv' class='field-input'>
+							</td>
+							<td>
+								<input onkeyup='' type='number' min='0' max='31' value='31' name='sp-iv' id='sp-iv' class='field-input'>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row" class='ev-title'> 
+								Max EVs 
+							</th>
+							<td>
+								<input onkeyup="" type = "number" min='0' max='252' step='4' name = "hp-max" id = "hp-max" value = "252" class = "field-input">
+								<p id='hp-stat-max' class='ev-subtitle'>
+									(Min Stat)
+								</p>
+							</td>
+							<td>
+								<input onkeyup="" type = "number" min='0' max='252' step='4' name = "at-max" id = "at-max" value = "252" class = "field-input">
+								<p id='at-stat-max' class='ev-subtitle'>
+									(Min Stat)
+								</p>
+							</td>
+							<td>
+								<input onkeyup="" type = "number" min='0' max='252' step='4' name = "df-max" id = "df-max" value = "252" class = "field-input">
+								<p id='df-stat-max' class='ev-subtitle'>
+									(Min Stat)
+								</p>
+							</td>
+							<td>
+								<input onkeyup="" type = "number" min='0' max='252' step='4' name = "sa-max" id = "sa-max" value = "252" class = "field-input">
+								<p id='sa-stat-max' class='ev-subtitle'>
+									(Min Stat)
+								</p>
+							</td>
+							<td>
+								<input onkeyup="" type = "number" min='0' max='252' step='4' name = "sd-max" id = "sd-max" value = "252" class = "field-input">
+								<p id='sd-stat-max' class='ev-subtitle'>
+									(Min Stat)
+								</p>
+							</td>
+							<td>
+								<input  onkeyup="" type = "number" min='0' max='252' step='4' name = "sp-max" id = "sp-max" value = "252" class = "field-input">
+								<p id='sp-stat-max' class='ev-subtitle'>
+									(Min Stat)
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row" class='ev-title'> 
+								Min EVs 
+							</th>
+							<td>
+								<input onkeyup=")" type = "number" min='0' max='252' step='4' name = "hp-min" id = "hp-min" value = "0" class = "field-input"></br>
+								<p id='hp-stat-min' class='ev-subtitle'>
+									(Min Stat)
+								</p>
+							</td>
+							<td>
+								<input onkeyup="" type = "number" min='0' max='252' step='4' name = "at-min" id = "at-min" value = "0" class = "field-input"></br>
+								<p id='at-stat-min' class='ev-subtitle'>
+									(Min Stat)
+								</p>
+							</td>
+							<td>
+								<input onkeyup="" type = "number" min='0' max='252' step='4' name = "df-min" id = "df-min" value = "0" class = "field-input"></br>
+								<p id='df-stat-min' class='ev-subtitle'>
+									(Min Stat)
+								</p>
+							</td>
+							<td>
+								<input onkeyup="" type = "number" min='0' max='252' step='4' name = "sa-min" id = "sa-min" value = "0" class = "field-input"></br>
+								<p id='sa-stat-min' class='ev-subtitle'>
+									(Min Stat)
+								</p>
+							</td>
+							<td>
+								<input onkeyup="" type = "number" min='0' max='252' step='4' name = "sd-min" id = "sd-min" value = "0" class = "field-input">
+								<p id='sd-stat-min' class='ev-subtitle'>
+									(Min Stat)
+								</p>
+							</td>
+							<td>
+								<input onkeyup="" type = "number" min='0' max='252' step='4' name = "sp-min" id = "sp-min" value = "0" class = "field-input">
+								<p id='sp-stat-min' class='ev-subtitle'>
+									(Min Stat)
+								</p>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			</br>
+			<div class='menu' id='submit-menu'>
+			</div>
 		</div>
 		<div id="foot">
 		</div>
