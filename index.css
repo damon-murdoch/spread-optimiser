@@ -27,8 +27,8 @@ input:read-only {
 	padding-left: 5px;
 	padding-right: 5px;
 	
-	margin-top: 1%;
-	width: 40%;
+	margin-top: 2px;
+	width: 640px;
 	background-color: #99ccff;
 	display: inline-block;
 	
@@ -40,6 +40,11 @@ input:read-only {
 #select-pokemon 
 {
 	float:left;
+}
+
+#select-sprite
+{
+	display: inline-block;
 }
 
 #select-level 
@@ -60,6 +65,18 @@ input:read-only {
 {
 	font-size: 8pt;
 	color: darkblue;
+}
+
+#submit-menu {}
+
+#complexity-label 
+{
+	float:left;
+}
+
+#time-label 
+{
+	float:right;
 }
 
 .select

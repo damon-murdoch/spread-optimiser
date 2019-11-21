@@ -19,8 +19,7 @@ window.addEventListener("load",function()
 	for (pkmn in BattlePokedex)
 	{
 		names.push(BattlePokedex[pkmn].species);
-		index.push(pokemon);
+		index.push(pkmn);
 	}
-	
-	autocomplete(document.getElementById('input'),names,indexes);
+	autocomplete(document.getElementById('pokemon'),names,index);
 });

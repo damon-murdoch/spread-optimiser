@@ -17,7 +17,7 @@
 */
 function stat(B,I,E,L,N)
 {
-	return Math.floor(((((E / 4) + I + 2 * B) * L / 100) + 5) * N);
+	return Math.floor((((I + 2 * B + (E/4)) * L / 100) + 5) * N);
 }
 
 /*
@@ -37,6 +37,5 @@ function stat(B,I,E,L,N)
 */
 function hp(B,I,E,L)
 {
-	
-	return Math.floor((((E / 4) + I + 2 * B) * L / 100) + 10 + L);
+	return Math.floor(((I + 2 * B + (E / 4)) * L / 100) + 10 + L);
 }
