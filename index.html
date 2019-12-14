@@ -4,6 +4,9 @@
 		<!-- Webpage Title -->
 		<title> EV Spread optimiser </title>
 	
+		<!-- Custom Icon -->
+		<link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
+	
 		<!-- Prevent Firefox Errors -->
 		<meta charset="utf-8"/>
 	
@@ -24,6 +27,10 @@
 			crossorigin="anonymous">
 		</script>
 		
+		<!-- Infinite Scroll Scrolling Optimisation Algorithm -->
+		<script src="scroll/infinite-scroll.pkgd.min.js">
+		</script>
+		
 		<!-- Pokemon Data (From Pokemon Showdown!) -->
 		<script src="data/pokedex.js">
 		</script>
@@ -38,6 +45,14 @@
 		
 		<!-- Autocomplete Text Box -->
 		<script src="util/autofill.js">
+		</script>
+		
+		<!-- Tree Data Structure -->
+		<script src="util/tree.js">
+		</script>
+		
+		<!-- Report Data Structure -->
+		<script src="util/report.js">
 		</script>
 		
 		<!-- Window event listeners -->
@@ -220,66 +235,66 @@
 								</select>
 							</td>
 							<td scope="col">
-								<select class='select field-input' id = "atk-sel" onChange = "setNature('at')">
-									<option class="boosting" value="boosting"> 
+								<select class='select field-input' id = "atk-sel" onChange = "setNature('atk')" disabled='disabled'>
+									<option class="boosting" id='atk-pos' value='1.1'> 
 										Boosting
 									</option>
-									<option class="neutral" id="atk-def" value="neutral" selected="selected"> 
+									<option class="neutral" id='atk-def' value='1' selected="selected"> 
 										Neutral
 									</option>
-									<option class="hindering" value="hindering"> 
+									<option class="hindering" id='atk-neg' value='0.9'> 
 										Hindering 
 									</option>
 								</select>
 							</td>
 							<td scope="col">
-								<select class='select field-input' id="def-sel" onChange = "setNature('df')">
-									<option class="boosting field-input"  value="boosting"> 
+								<select class='select field-input' id="def-sel" onChange = "setNature('def')" disabled='disabled'>
+									<option class="boosting field-input" id='def-pos' value='1.1'> 
 										Boosting
 									</option>
-									<option class="neutral field-input"  id="def-def" value="neutral" selected="selected"> 
+									<option class="neutral field-input"  id='def-def' value='1' selected="selected"> 
 										Neutral
 									</option>
-									<option class="hindering field-input"  value="hindering"> 
+									<option class="hindering field-input" id='def-neg' value='0.9'> 
 										Hindering
 									</option>
 								</select>
 							</td>
 							<td scope="col">
-								<select class='select field-input' id="spa-sel" onChange = "setNature('sa')">
-									<option class="boosting field-input"  value="boosting"> 
+								<select class='select field-input' id="spa-sel" onChange = "setNature('spa')" disabled='disabled'>
+									<option class="boosting field-input" id='spa-pos' value='1.1'> 
 										Boosting
 									</option>
-									<option class="neutral field-input"  id="spa-def" value="neutral" selected="selected"> 
+									<option class="neutral field-input"  id='spa-def' value='1' selected="selected"> 
 										Neutral
 									</option>
-									<option class="hindering field-input"  value="hindering">
+									<option class="hindering field-input" id='spa-neg' value='0.9'>
 										Hindering
 									</option>
 								</select>
 							</td>
 							<td scope="col" >
-								<select class='select field-input' id="spd-sel" onChange = "setNature('sd')">
-									<option class="boosting field-input"  value="boosting"> 
+								<select class='select field-input' id="spd-sel" onChange = "setNature('spd')" disabled='disabled'>
+									<option class="boosting field-input" id='spd-pos' value='1.1'> 
 										Boosting
 									</option>
-									<option class="neutral field-input"  id="spd-def" value="neutral" selected="selected">
+									<option class="neutral field-input"  id='spd-def' value='1' selected="selected">
 										Neutral
 									</option>
-									<option class="hindering field-input" value="hindering"> 
+									<option class="hindering field-input" id='spd-neg' value='0.9'> 
 										Hindering
 									</option>
 								</select>
 							</td>
 							<td scope="col">
-								<select class='select field-input' id="spe-sel" onChange = "setNature('sp')">
-									<option class="boosting field-input"  value="boosting"> 
+								<select class='select field-input' id="spe-sel" onChange = "setNature('spe')" disabled='disabled'>
+									<option class="boosting field-input"  value='1.1'> 
 										Boosting
 										</option>
-									<option class="neutral field-input"  id="spe-def" value="neutral" selected="selected"> 
+									<option class="neutral field-input"  id="spe-def" value='1' selected="selected"> 
 										Neutral
 									</option>
-									<option class="hindering field-input" value="hindering"> 
+									<option class="hindering field-input" value='0.9'> 
 										Hindering
 									</option>
 								</select>
@@ -394,16 +409,33 @@
 				</form>
 			</div>
 			</br>
+			<div class='menu' id='filter-menu'>
+				<h5> Filters </h5>
+				<div id='filter-menu'>
+					<input type='checkbox' class='report-cb' id='chk-burn'> Min. Weather / Burn Damage <!-- divisible by 16 minus one -->
+					<input type='checkbox' class='report-cb' id='chk-seed'> Min. Leech Seed Damage <!-- divisible by 8 minus one -->
+					<input type='checkbox' class='report-cb' id='chk-lorb'> Min. Life Orb Damage <!-- divisible by ten minus one -->
+					</br>
+					<input type='checkbox' class='report-cb' id='chk-strs'> Sitrus After Super Fang <!-- divisible by two -->
+					<input type='checkbox' class='report-cb' id='chk-fwam'> Super Sitrus After two Super Fangs <!-- divisible by four -->
+					<input type='checkbox' class='report-cb' id='chk-subf'> Four Substitutes <!-- divisible by four plus one -->
+					<input type='checkbox' class='report-cb' id='chk-subl'> Five Substitutes w/ Leftovers <!-- divisible by four minus one -->
+				</div>
+			</div>
+			</br>
 			<div class='menu' id='submit-menu'>
 				<p id='complexity-label'>
-					Computational Complexity: (n^x) 
+					Complexity: (n^x) 
 				</p>
 				<p id='time-label'>
 					Expected Time: (mmhhss:ddmmyyyy)
 				</p>
-				<a href="#" >
-					Generate
-				</a>
+				<h5>
+					<a href="#" onClick='solve();'> Generate </a>
+				</h5>
+				</br>
+				<div id='output-table'>
+				</div>
 			</div>
 		</div>
 		<div id="foot">

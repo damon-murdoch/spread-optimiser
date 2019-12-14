@@ -1,202 +1,102 @@
 let BattleNatures = {
 	hardy: {
-		hp: 1,
-		at: 1,
-		df: 1,
-		sa: 1,
-		sd: 1,
-		sp: 1
+		pos: 'atk',
+		neg: 'atk'
 	},
 	lonely: {
-		hp: 1,
-		at: 1.1,
-		df: 0.9,
-		sa: 1,
-		sd: 1,
-		sp: 1
+		pos: 'atk',
+		neg: 'def'
 	},
 	brave: {
-		hp: 1,
-		at: 1.1,
-		df: 1,
-		sa: 1,
-		sd: 1,
-		sp: 0.9
+		pos: 'atk',
+		neg: 'spe'
 	},
 	adamant: {
-		hp: 1,
-		at: 1.1,
-		df: 1,
-		sa: 0.9,
-		sd: 1,
-		sp: 1
+		pos: 'atk',
+		neg: 'spa'
 	},
 	naughty: {
-		hp: 1,
-		at: 1.1,
-		df: 1,
-		sa: 1,
-		sd: 0.9,
-		sp: 1
+		pos: 'atk',
+		neg: 'spd'
 	},
 	bold: {
-		hp: 1,
-		at: 0.9,
-		df: 1.1,
-		sa: 1,
-		sd: 1,
-		sp: 1
+		pos: 'def',
+		neg: 'atk'
 	},
 	docile: {
-		hp: 1,
-		at: 1,
-		df: 1,
-		sa: 1,
-		sd: 1,
-		sp: 1
+		pos: 'def',
+		neg: 'def'
 	},
 	relaxed: {
-		hp: 1,
-		at: 1,
-		df: 1.1,
-		sa: 1,
-		sd: 1,
-		sp: 0.9
+		pos: 'def',
+		neg: 'spe'
 	},
 	impish: {
-		hp: 1,
-		at: 1,
-		df: 1.1,
-		sa: 0.9,
-		sd: 1,
-		sp: 1
+		pos: 'def',
+		neg: 'spa'
 	},
 	lax: {
-		hp: 1,
-		at: 1,
-		df: 1.1,
-		sa: 1,
-		sd: 0.9,
-		sp: 1
+		pos: 'def',
+		neg: 'spd'
 	},
 	timid: {
-		hp: 1,
-		at: 0.9,
-		df: 1,
-		sa: 1,
-		sd: 1,
-		sp: 1.1
+		pos: 'spe',
+		neg: 'atk'
 	},
 	hasty: {
-		hp: 1,
-		at: 1,
-		df: 0.9,
-		sa: 1,
-		sd: 1,
-		sp: 1.1
+		pos: 'spe',
+		neg: 'def'
 	},
 	serious: {
-		hp: 1,
-		at: 1,
-		df: 1,
-		sa: 1,
-		sd: 1,
-		sp: 1
+		pos: 'spe',
+		neg: 'spe'
 	},
 	jolly: {
-		hp: 1,
-		at: 1,
-		df: 1,
-		sa: 0.9,
-		sd: 1,
-		sp: 1.1
+		pos: 'spe',
+		neg: 'spa'
 	},
 	naive: {
-		hp: 1,
-		at: 1,
-		df: 1,
-		sa: 1,
-		sd: 0.9,
-		sp: 1.1
+		pos: 'spe',
+		neg: 'spd'
 	},
 	modest: {
-		hp: 1,
-		at: 0.9,
-		df: 1,
-		sa: 1.1,
-		sd: 1,
-		sp: 1
+		pos: 'spa',
+		neg: 'atk'
 	},
 	mild: {
-		hp: 1,
-		at: 1,
-		df: 0.9,
-		sa: 1.1,
-		sd: 1,
-		sp: 1
+		pos: 'spa',
+		neg: 'def'
 	},
 	quiet: {
-		hp: 1,
-		at: 1,
-		df: 1,
-		sa: 1.1,
-		sd: 1,
-		sp: 0.9
+		pos: 'spa',
+		neg: 'spe'
 	},
 	bashful: {
-		hp: 1,
-		at: 1,
-		df: 1,
-		sa: 1,
-		sd: 1,
-		sp: 1
+		pos: 'spa',
+		neg: 'spa'
 	},
 	rash: {
-		hp: 1,
-		at: 1,
-		df: 1,
-		sa: 1.1,
-		sd: 0.9,
-		sp: 1
+		pos: 'spa',
+		neg: 'spd'
 	},
 	calm: {
-		hp: 1,
-		at: 0.9,
-		df: 1,
-		sa: 1,
-		sd: 1.1,
-		sp: 1
+		pos: 'spd',
+		neg: 'atk'
 	},
 	gentle: {
-		hp: 1,
-		at: 1,
-		df: 0.9,
-		sa: 1,
-		sd: 1.1,
-		sp: 1
+		pos: 'spd',
+		neg: 'def'
 	},
 	sassy: {
-		hp: 1,
-		at: 1,
-		df: 1,
-		sa: 1,
-		sd: 1.1,
-		sp: 0.9
+		pos: 'spd',
+		neg: 'spe'
 	},
 	careful: {
-		hp: 1,
-		at: 1,
-		df: 1,
-		sa: 0.9,
-		sd: 1.1,
-		sp: 1
+		pos: 'spd',
+		neg: 'spa'
 	},
 	quirky: {
-		hp: 1,
-		at: 1,
-		df: 1,
-		sa: 1,
-		sd: 1,
-		sp: 1
+		pos: 'spd',
+		neg: 'spd'
 	}
 }

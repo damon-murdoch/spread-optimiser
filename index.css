@@ -102,3 +102,32 @@ input:read-only {
 {
 	color: #ff6b6b;
 }
+
+#report-menu
+{
+	text-align: center;
+}
+
+#report-filter
+{
+	float:left; 
+	display: flex;
+	width:50%;
+}
+
+.report-cb-row
+{
+	width: 300px;
+}
+
+#report-table
+{
+	float: right;
+	display: flex;
+	width:50%;
+}
+
+.toggle
+{
+	color: red;
+}

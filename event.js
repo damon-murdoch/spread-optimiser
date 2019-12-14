@@ -21,5 +21,15 @@ window.addEventListener("load",function()
 		names.push(BattlePokedex[pkmn].species);
 		index.push(pkmn);
 	}
+	
 	autocomplete(document.getElementById('pokemon'),names,index);
+	
+	loadPokemonData('gardevoir');
+});
+
+$('.output-table').infiniteScroll({
+  // options
+  path: '.pagination__next',
+  append: '.post',
+  history: false,
 });
