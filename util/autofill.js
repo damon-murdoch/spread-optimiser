@@ -9,132 +9,36 @@ Description:
 
 function autocomplete(inp, arr, key) 
 {
-	
-	if (arr.length != key.length)
-	{
-		console.log("title and key array lengths are not the same!");
-		return false;
-	}
-
-	var currentFocus;
-
 	inp.addEventListener("input", function(e) 
 	{
-		
-		var a, b, i, val = this.value;
+		let li = [];
 
-		closeAllLists();
-		
-		if (!val)
+		for(let pokemon in BattlePokedex)
 		{
-			return false;
+			if (pokemon.startsWith(inp.value.toLowerCase().replace('-','')))
+			{
+				li.push(pokemon);
+			}
 		}
 		
-		currentFocus = -1;
-
-		a = document.createElement("DIV");
-		a.setAttribute("id", this.id + "autocomplete-list");
-		a.setAttribute("class", "autocomplete-items");
-
-		this.parentNode.appendChild(a);
-
-		for (i = 0; i < arr.length; i++) 
+		if (li.length == 1)
 		{
-			if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) 
-			{
-
-				b = document.createElement("DIV");
-
-				b.setAttribute('id',key[i]);
-				
-				b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-				b.innerHTML += arr[i].substr(val.length);
-				b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-				
-				b.addEventListener("click", function(e) {
-					
-					inp.value = "";
-					
-					loadPokemonData(b.getAttribute('id'));
-					
-					closeAllLists();
-				});
-			
-				a.appendChild(b);
-			}
+			loadPokemonData(li[0]);
+			inp.value = '';
 		}
 	});
 	
 	inp.addEventListener("keydown", function(e)
 	{
-		var x = document.getElementById(this.id + "autocomplete-list");
-		
-		if (x) x = x.getElementsByTagName("div");
-		
-		if (e.keyCode == 40) 
+		if(e.keyCode == 13)
 		{
-			currentFocus++;
-			addActive(x);
-		} 
-		else if (e.keyCode == 38) 
-		{
-			currentFocus--;
-			addActive(x);
-		} 
-		
-		else if (e.keyCode == 13) 
-		{
-		
-			e.preventDefault();
-			
-			if (currentFocus > -1) {
-				if (x) x[currentFocus].click();
-			}
-		}
-	});
-	
-	function addActive(x) 
-	{
+			event.preventDefault();
 
-		if (!x) return false;
-		
-		removeActive(x);
-		
-		if (currentFocus >= x.length) 
-		{
-			currentFocus = 0;
-		}
-		
-		if (currentFocus < 0)
-		{
-			currentFocus = (x.length - 1);
-		}
-		
-		x[currentFocus].classList.add("autocomplete-active");
-	}
-	
-	function removeActive(x) 
-	{
-		
-		for (var i = 0; i < x.length; i++) 
-		{
-			x[i].classList.remove("autocomplete-active");
-		}
-	}
-	
-	function closeAllLists(elmnt) 
-	{
-		var x = document.getElementsByClassName("autocomplete-items");
-		for (var i = 0; i < x.length; i++) 
-		{
-			if (elmnt != x[i] && elmnt != inp) 
+			if (Object.keys(BattlePokedex).includes(inp.value.toLowerCase().replace('-','')))
 			{
-				x[i].parentNode.removeChild(x[i]);
+				loadPokemonData(inp.value.toLowerCase().replace('-',''));
+				inp.value = '';
 			}
 		}
-	}
-	
-	document.addEventListener("click", function (e) {
-		closeAllLists(e.target);
 	});
 }

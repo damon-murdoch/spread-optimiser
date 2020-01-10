@@ -18,7 +18,7 @@
 function stat(B,I,E,L,N)
 {
 	// console.log(B + ' ' + I + ' ' + E + ' ' + L + ' ' + N);
-	return Math.floor((((I + 2 * B + (E/4)) * L / 100) + 5) * N);
+	return Math.floor(((Math.floor(I + 2 * B + (E/4)) * L / 100) + 5) * N);
 }
 
 /*
