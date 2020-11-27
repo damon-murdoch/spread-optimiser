@@ -376,7 +376,7 @@ function loadPokemonData(value)
 {
 	// Set active Pokemon to the provided one
 	window.active = BattlePokedex[value];
-	
+
 	// Reset natures to default
 	window.nature = {};
 
@@ -402,7 +402,7 @@ function loadPokemonData(value)
 
 	// Set the input text field placeholder text to display the active Pokemon
 	let placeholder = document.getElementById('pokemon');
-	placeholder.placeholder = "Active: " + active.species;
+	placeholder.placeholder = "Active: " + active.name;
 
 	// If image object already exists in the page
 	if(document.contains(document.getElementById('icon')))
@@ -417,15 +417,22 @@ function loadPokemonData(value)
 	// Assign image unique ID
 	img.id = "icon";
 	
+	
 	// Attempt to assign the image its sprite if one is present
-	img.src = 'img/' + pad(active.num,3) + '.png';
+	//img.src = 'img/' + pad(active.num,3) + '.png';
+	
+	img.src = ('img/ms/' + selectMenuSprite(window.active));
+	
+	console.log('Image Source:',img.src);
 	
 	// If file is not found
 	if (img.height == 0)
 	{
 		// Use default
-		img.src = 'img/000.png';
+		img.src = 'img/ms/000MS.png';
 	}
+	
+	console.log('Image Source:',img.src);
 	
 	// Append the created sprite object to the parent positioning object
 	document.getElementById('select-sprite').appendChild(img);

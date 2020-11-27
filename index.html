@@ -13,12 +13,19 @@
 		<!-- Stylesheet Source -->
 		
 		<!-- latest bootstrap release -->
-		<link rel= "stylesheet" type = "text/css" href= "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
 		
 		<!-- custom css -->
-		<link rel= "stylesheet" type = "text/css" href= "index.css">
+		<link rel="stylesheet" type="text/css" href="index.css">
 		
 		<!-- JavaScript Source -->
+		
+		<!-- Bootstrap Java Script Code -->
+		
+		<!--
+		<script src="bootstrap/bootstrap.js">
+		</script>
+		-->
 		
 		<!-- JQuery Source Code -->
 		<script
@@ -53,6 +60,10 @@
 		
 		<!-- Report Data Structure -->
 		<script src="util/report.js">
+		</script>
+		
+		<!-- Menu Sprite Selection Function -->
+		<script src="util/mssel.js">
 		</script>
 		
 		<!-- Window event listeners -->
@@ -103,7 +114,7 @@
 						<label>
 							Level
 						</label>
-						<input id='level' type='number' min='1' max='100' value='50' name='level' placeholder='Current: (Level)'>
+						<input onChange=update() id='level' type='number' min='1' max='100' value='50' name='level' placeholder='Current: (Level)'>
 					</form>
 				</div>
 			</div>
