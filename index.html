@@ -13,31 +13,31 @@
 		<!-- Stylesheet Source -->
 		
 		<!-- latest bootstrap release -->
-		<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.min.css">
 		
 		<!-- custom css -->
 		<link rel="stylesheet" type="text/css" href="index.css">
 		
 		<!-- JavaScript Source -->
+			
+		<!-- JQuery Source Code -->
+		<script src="util/jquery.js">
+		</script>
 		
 		<!-- Bootstrap Java Script Code -->
-		
-		<!--
 		<script src="bootstrap/bootstrap.js">
 		</script>
-		-->
 		
-		<!-- JQuery Source Code -->
-		<script
-			src="https://code.jquery.com/jquery-3.3.1.js"
-			integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-			crossorigin="anonymous">
+		<!-- Autocomplete Java Source Code -->
+		<!-- From coverage-calculator -->
+		<script src="util/autocomplete.js">
 		</script>
 		
-		<!-- Infinite Scroll Scrolling Optimisation Algorithm -->
-		<script src="scroll/infinite-scroll.pkgd.min.js">
+		<!-- Search Algorithm Source Code -->
+		<!-- From coverage-calculator -->
+		<script src="util/search.js">
 		</script>
-		
+
 		<!-- Pokemon Data (From Pokemon Showdown!) -->
 		<script src="data/pokedex.js">
 		</script>
@@ -50,10 +50,11 @@
 		<script src="util/math.js">
 		</script>
 		
-		<!-- Autocomplete Text Box -->
-		<script src="util/autofill.js">
+		<!-- Pokemon Sprite Loading Code -->
+		<!-- From coverage-calculator -->
+		<script src="util/sprite.js">
 		</script>
-		
+
 		<!-- Tree Data Structure -->
 		<script src="util/tree.js">
 		</script>
@@ -65,17 +66,13 @@
 		<!-- Menu Sprite Selection Function -->
 		<script src="util/mssel.js">
 		</script>
-		
-		<!-- Window event listeners -->
-		<script src="event.js">
-		</script>
-		
+
 		<!-- Main Application Source Library -->
 		<script src="index.js">
 		</script>
 	</head>
 	<body>
-		<div id="head">
+		<div id="head" class="container text-center">
 			<div id="title">
 				<h2>
 					Pokemon EV Spread Optimiser 
@@ -94,364 +91,449 @@
 				</p>
 			</div>
 		</div>
-		<div id="body">
-			<div class='menu' id='select-menu'>
-				<div id='select-pokemon'>
-					<form id='select-pokemon-form' autocomplete='off'>
-						<div class='autocomplete'>
-							<input id='pokemon' type='text' name='search' placeholder='Current: (Pokemon)'>
-						</div>
+		<div id="body" class='container'>
+			<div id='select-menu' class='row justify-content-md-center'>
+				<div id='select-pokemon' class='col col-md-auto'>
+					<form id='select-pokemon-form' class='form-group' autocomplete='off'>
 						<label>
 							Pokemon
 						</label>
+						<input id='pokemon' class='form-control' type='text' name='search' placeholder='Current: (Pokemon)' onChange='changePokemonData()'>
 					</form>
 				</div>
-				<div id='select-sprite'>
-					<!-- Javascript-populated icon sprite of active Pokemon -->
+				<div id='select-sprite-div' class='col col-md-auto'>
+					<img id='select-sprite'>
+						<!-- Javascript-populated icon sprite of active Pokemon -->
+					</img>
 				</div>
-				<div id='select-level'>
-					<form id='select-level-form' autocomplete='off'>
+				<div id='select-level' class='col col-md-auto'>
+					<form id='select-level-form' class='form-group' autocomplete='off'>
 						<label>
 							Level
 						</label>
-						<input onChange=update() id='level' type='number' min='1' max='100' value='50' name='level' placeholder='Current: (Level)'>
+						<input id='level' class='form-control' type='number' min='1' max='100' value='50' name='level' placeholder='Current: (Level)' onChange=update()>
 					</form>
 				</div>
 			</div>
-			</br> <!-- TODO: Fix this using CSS -->
-			<div class='menu' id='table-menu'>
+			<div id='table-menu' class='row justify-content-md-center'>
 				<form id='table-form' autocomplete='off'>
-					<table class='table'>
-						<tr>
-							<th scope="col"> 
-								Field 
-							</th>
-							<th scope="col"> 
-								HP 
-							</th>
-							<th scope="col"> 
-								Atk 
-							</th>
-							<th scope="col"> 
-								Def 
-							</th>
-							<th scope="col"> 
-								SpA 
-							</th>
-							<th scope="col"> 
-								SpD 
-							</th>
-							<th scope="col"> 
-								Spe 
-							</th>
-						</tr>
-						<tr>
-							<th> 
-								Base 
-							</th>
-							<td>
-								<input type = "text" name = "hp-base" id = "hp-base" value = "" class = "field-input" readonly>
-							</td>
-							<td>
-								<input type = "text" name = "atk-base" id = "atk-base" value = "" class = "field-input" readonly>
-							</td>
-							<td>
-								<input type = "text" name = "def-base" id = "def-base" value = "" class = "field-input" readonly>
-							</td>
-							<td>
-								<input type = "text" name = "spa-base" id = "spa-base" value = "" class = "field-input" readonly>
-							</td>
-							<td>
-								<input type = "text" name = "spd-base" id = "spd-base" value = "" class = "field-input" readonly>
-							</td>
-							<td>
-								<input type = "text" name = "spe-base" id = "spe-base" value = "" class = "field-input" readonly>
-							</td>
-						</tr>
-						<tr>
-							<th scope="col"> 
-								Nature 
-							</th>
-							<td scope="col">
-								<select class='select field-input' id = "nature-select" onChange = "setNature()">
-									<option class='nature-option' value='hardy'> 
-										Hardy 
-									</option>
-									<option class='nature-option' value='lonely'> 
-										Lonely 
-									</option>
-									<option class='nature-option' value='brave'> 
-										Brave 
-									</option>
-									<option class='nature-option' value='adamant'> 
-										Adamant 
-									</option>
-									<option class='nature-option' value='naughty'> 
-										Naughty 
-									</option>
-									<option class='nature-option' value='bold'> 
-										Bold 
-									</option>
-									<option class='nature-option' value='docile'> 
-										Docile 
-									</option>
-									<option class='nature-option' value='relaxed'> 
-										Relaxed 
-									</option>
-									<option class='nature-option' value='impish'> 
-										Impish 
-									</option>
-									<option class='nature-option' value='lax'> 
-										Lax 
-									</option>
-									<option class='nature-option' value='timid'> 
-										Timid 
-									</option>
-									<option class='nature-option' value='hasty'> 	
-										Hasty 
-									</option>
-									<option class='nature-option' value='serious'> 
-										Serious 
-									</option>
-									<option class='nature-option' value='jolly'> 
-										Jolly 
-									</option>
-									<option class='nature-option' value='naive'> 
-										Naive 
-									</option>
-									<option class='nature-option' value='modest'> 
-										Modest 
-									</option>
-									<option class='nature-option' value='mild'> 
-										Mild 
-									</option>
-									<option class='nature-option' value='quiet'> 
-										Quiet 
-									</option>
-									<option class='nature-option' value='bashful'> 
-										Bashful 
-									</option>
-									<option class='nature-option' value='rash'> 
-										Rash 
-									</option>
-									<option class='nature-option' value='calm'> 
-										Calm 
-									</option>
-									<option class='nature-option' value='gentle'> 
-										Gentle 
-									</option>
-									<option class='nature-option' value='sassy'> 
-										Sassy 
-									</option>
-									<option class='nature-option' value='careful'> 
-										Careful 
-									</option>
-									<option class='nature-option' value='quirky'> 
-										Quirky 
-									</option>
-								</select>
-							</td>
-							<td scope="col">
-								<select class='select field-input' id = "atk-sel" onChange = "setNature('atk')" disabled='disabled'>
-									<option class="boosting" id='atk-pos' value='1.1'> 
-										Boosting
-									</option>
-									<option class="neutral" id='atk-def' value='1' selected="selected"> 
-										Neutral
-									</option>
-									<option class="hindering" id='atk-neg' value='0.9'> 
-										Hindering 
-									</option>
-								</select>
-							</td>
-							<td scope="col">
-								<select class='select field-input' id="def-sel" onChange = "setNature('def')" disabled='disabled'>
-									<option class="boosting field-input" id='def-pos' value='1.1'> 
-										Boosting
-									</option>
-									<option class="neutral field-input"  id='def-def' value='1' selected="selected"> 
-										Neutral
-									</option>
-									<option class="hindering field-input" id='def-neg' value='0.9'> 
-										Hindering
-									</option>
-								</select>
-							</td>
-							<td scope="col">
-								<select class='select field-input' id="spa-sel" onChange = "setNature('spa')" disabled='disabled'>
-									<option class="boosting field-input" id='spa-pos' value='1.1'> 
-										Boosting
-									</option>
-									<option class="neutral field-input"  id='spa-def' value='1' selected="selected"> 
-										Neutral
-									</option>
-									<option class="hindering field-input" id='spa-neg' value='0.9'>
-										Hindering
-									</option>
-								</select>
-							</td>
-							<td scope="col" >
-								<select class='select field-input' id="spd-sel" onChange = "setNature('spd')" disabled='disabled'>
-									<option class="boosting field-input" id='spd-pos' value='1.1'> 
-										Boosting
-									</option>
-									<option class="neutral field-input"  id='spd-def' value='1' selected="selected">
-										Neutral
-									</option>
-									<option class="hindering field-input" id='spd-neg' value='0.9'> 
-										Hindering
-									</option>
-								</select>
-							</td>
-							<td scope="col">
-								<select class='select field-input' id="spe-sel" onChange = "setNature('spe')" disabled='disabled'>
-									<option class="boosting field-input"  value='1.1'> 
-										Boosting
+					<div class='table-responsive'>
+						<table class='table table-sm table-striped table-bordered' style="table-layout: fixed">
+							<thead class='thead-light'>
+								<tr class='form-group'>
+									<th class="col col-sm" scope="col" style="width: 10%"> 
+										Field
+									</th>
+									<th class="col col-sm" scope="col" style="width: 15%"> 
+										HP 
+									</th>
+									<th class="col col-sm" scope="col" style="width: 15%">
+										Atk 
+									</th>
+									<th class="col col-sm" scope="col" style="width: 15%">
+										Def 
+									</th>
+									<th class="col col-sm" scope="col" style="width: 15%">
+										SpA 
+									</th>
+									<th class="col col-sm" scope="col" style="width: 15%">
+										SpD 
+									</th>
+									<th class="col col-sm" scope="col" style="width: 15%">
+										Spe 
+									</th>
+								</tr>
+							</thead>
+							<tr class='form-group'>
+								<th class="col col-sm" scope="row"> 
+									Base
+								</th>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' type = "text" name = "hp-base" id = "hp-base" value = "" readonly>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' type = "text" name = "atk-base" id = "atk-base" value = "" readonly>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' type = "text" name = "def-base" id = "def-base" value = "" readonly>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' type = "text" name = "spa-base" id = "spa-base" value = "" readonly>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' type = "text" name = "spd-base" id = "spd-base" value = "" readonly>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' type = "text" name = "spe-base" id = "spe-base" value = "" readonly>
+								</td>
+							</tr>
+							<tr class='form-group'>
+								<th class="col col-sm" scope="row"> 
+									Nature
+								</th>
+								<td class="col col-sm">
+									<select class='form-control' id = "nature-select" onChange = "setNature()">
+										<option value='hardy'> 
+											Hardy 
 										</option>
-									<option class="neutral field-input"  id="spe-def" value='1' selected="selected"> 
-										Neutral
-									</option>
-									<option class="hindering field-input" value='0.9'> 
-										Hindering
-									</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<th scope='row' class='ev-title'>
-								IVs
-							</th>
-							<td>
-								<input onChange='updateField("hp")' type='number' min='0' max='31' value='31' name='hp-iv' id='hp-iv' class='field-input'>
-							</td>
-							<td>
-								<input onChange='updateField("atk")' type='number' min='0' max='31' value='31' name='atk-iv' id='atk-iv' class='field-input'>
-							</td>
-							<td>
-								<input onChange='updateField("def")' type='number' min='0' max='31' value='31' name='def-iv' id='def-iv' class='field-input'>
-							</td>
-							<td>
-								<input onChange='updateField("spa")' type='number' min='0' max='31' value='31' name='spa-iv' id='spa-iv' class='field-input'>
-							</td>
-							<td>
-								<input onChange='updateField("spd")' type='number' min='0' max='31' value='31' name='spd-iv' id='spd-iv' class='field-input'>
-							</td>
-							<td>
-								<input onChange='updateField("spe")' type='number' min='0' max='31' value='31' name='spe-iv' id='spe-iv' class='field-input'>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row" class='ev-title'> 
-								Max EVs 
-							</th>
-							<td>
-								<input onChange='updateField("hp")' type = "number" min='0' max='252' step='4' name = "hp-max" id = "hp-max" value = "252" class = "field-input">
-								<p id='hp-stat-max' class='ev-subtitle'>
-									(Min Stat)
-								</p>
-							</td>
-							<td>
-								<input onChange='updateField("atk")' type = "number" min='0' max='252' step='4' name = "atk-max" id = "atk-max" value = "252" class = "field-input">
-								<p id='atk-stat-max' class='ev-subtitle'>
-									(Min Stat)
-								</p>
-							</td>
-							<td>
-								<input onChange='updateField("def")' type = "number" min='0' max='252' step='4' name = "def-max" id = "def-max" value = "252" class = "field-input">
-								<p id='def-stat-max' class='ev-subtitle'>
-									(Min Stat)
-								</p>
-							</td>
-							<td>
-								<input onChange='updateField("spa")' type = "number" min='0' max='252' step='4' name = "spa-max" id = "spa-max" value = "252" class = "field-input">
-								<p id='spa-stat-max' class='ev-subtitle'>
-									(Min Stat)
-								</p>
-							</td>
-							<td>
-								<input onChange='updateField("spd")' type = "number" min='0' max='252' step='4' name = "spd-max" id = "spd-max" value = "252" class = "field-input">
-								<p id='spd-stat-max' class='ev-subtitle'>
-									(Min Stat)
-								</p>
-							</td>
-							<td>
-								<input  onChange='updateField("spe")' type = "number" min='0' max='252' step='4' name = "spe-max" id = "spe-max" value = "252" class = "field-input">
-								<p id='spe-stat-max' class='ev-subtitle'>
-									(Min Stat)
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row" class='ev-title'> 
-								Min EVs 
-							</th>
-							<td>
-								<input onChange='updateField("hp")' type = "number" min='0' max='252' step='4' name = "hp-min" id = "hp-min" value = "0" class = "field-input"></br>
-								<p id='hp-stat-min' class='ev-subtitle'>
-									(Min Stat)
-								</p>
-							</td>
-							<td>
-								<input onChange='updateField("atk")' type = "number" min='0' max='252' step='4' name = "atk-min" id = "atk-min" value = "0" class = "field-input"></br>
-								<p id='atk-stat-min' class='ev-subtitle'>
-									(Min Stat)
-								</p>
-							</td>
-							<td>
-								<input onChange='updateField("def")' type = "number" min='0' max='252' step='4' name = "def-min" id = "def-min" value = "0" class = "field-input"></br>
-								<p id='def-stat-min' class='ev-subtitle'>
-									(Min Stat)
-								</p>
-							</td>
-							<td>
-								<input onChange='updateField("spa")' type = "number" min='0' max='252' step='4' name = "spa-min" id = "spa-min" value = "0" class = "field-input"></br>
-								<p id='spa-stat-min' class='ev-subtitle'>
-									(Min Stat)
-								</p>
-							</td>
-							<td>
-								<input onChange='updateField("spd")' type = "number" min='0' max='252' step='4' name = "spd-min" id = "spd-min" value = "0" class = "field-input">
-								<p id='spd-stat-min' class='ev-subtitle'>
-									(Min Stat)
-								</p>
-							</td>
-							<td>
-								<input onChange='updateField("spe")' type = "number" min='0' max='252' step='4' name = "spe-min" id = "spe-min" value = "0" class = "field-input">
-								<p id='spe-stat-min' class='ev-subtitle'>
-									(Min Stat)
-								</p>
-							</td>
-						</tr>
-					</table>
+										<option value='lonely'> 
+											Lonely 
+										</option>
+										<option value='brave'> 
+											Brave 
+										</option>
+										<option value='adamant'> 
+											Adamant 
+										</option>
+										<option value='naughty'> 
+											Naughty 
+										</option>
+										<option value='bold'> 
+											Bold 
+										</option>
+										<option value='docile'> 
+											Docile 
+										</option>
+										<option value='relaxed'> 
+											Relaxed 
+										</option>
+										<option value='impish'> 
+											Impish 
+										</option>
+										<option value='lax'> 
+											Lax 
+										</option>
+										<option value='timid'> 
+											Timid 
+										</option>
+										<option value='hasty'> 	
+											Hasty 
+										</option>
+										<option value='serious'> 
+											Serious 
+										</option>
+										<option value='jolly'> 
+											Jolly 
+										</option>
+										<option value='naive'> 
+											Naive 
+										</option>
+										<option value='modest'> 
+											Modest 
+										</option>
+										<option value='mild'> 
+											Mild 
+										</option>
+										<option value='quiet'> 
+											Quiet 
+										</option>
+										<option value='bashful'> 
+											Bashful 
+										</option>
+										<option value='rash'> 
+											Rash 
+										</option>
+										<option value='calm'> 
+											Calm 
+										</option>
+										<option value='gentle'> 
+											Gentle 
+										</option>
+										<option value='sassy'> 
+											Sassy 
+										</option>
+										<option value='careful'> 
+											Careful 
+										</option>
+										<option value='quirky'> 
+											Quirky 
+										</option>
+									</select>
+								</td>
+								<td class="col col-sm">
+									<select id = "atk-sel" class='form-control' onChange = "setNature('atk')" disabled='disabled'>
+										<option class="boosting" id='atk-pos' value='1.1'> 
+											Boosting
+										</option>
+										<option class="neutral" id='atk-def' value='1' selected="selected"> 
+											Neutral
+										</option>
+										<option class="hindering" id='atk-neg' value='0.9'> 
+											Hindering 
+										</option>
+									</select>
+								</td>
+								<td class="col col-sm">
+									<select id="def-sel" class='form-control' onChange = "setNature('def')" disabled='disabled'>
+										<option class="boosting field-input" id='def-pos' value='1.1'> 
+											Boosting
+										</option>
+										<option class="neutral field-input"  id='def-def' value='1' selected="selected"> 
+											Neutral
+										</option>
+										<option class="hindering field-input" id='def-neg' value='0.9'> 
+											Hindering
+										</option>
+									</select>
+								</td>
+								<td class="col col-sm">
+									<select id="spa-sel" class='form-control' onChange = "setNature('spa')" disabled='disabled'>
+										<option class="boosting field-input" id='spa-pos' value='1.1'> 
+											Boosting
+										</option>
+										<option class="neutral field-input"  id='spa-def' value='1' selected="selected"> 
+											Neutral
+										</option>
+										<option class="hindering field-input" id='spa-neg' value='0.9'>
+											Hindering
+										</option>
+									</select>
+								</td>
+								<td class="col col-sm">
+									<select id="spd-sel" class='form-control' onChange = "setNature('spd')" disabled='disabled'>
+										<option class="boosting field-input" id='spd-pos' value='1.1'> 
+											Boosting
+										</option>
+										<option class="neutral field-input"  id='spd-def' value='1' selected="selected">
+											Neutral
+										</option>
+										<option class="hindering field-input" id='spd-neg' value='0.9'> 
+											Hindering
+										</option>
+									</select>
+								</td>
+								<td class="col col-sm">
+									<select id="spe-sel" class='form-control' onChange = "setNature('spe')" disabled='disabled'>
+										<option class="boosting field-input"  value='1.1'> 
+											Boosting
+											</option>
+										<option class="neutral field-input"  id="spe-def" value='1' selected="selected"> 
+											Neutral
+										</option>
+										<option class="hindering field-input" value='0.9'> 
+											Hindering
+										</option>
+									</select>
+								</td>
+							</tr>
+							<tr class='form-group' scope="row">
+								<th class='col col-sm'>
+									IVs
+								</th>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("hp")' type='number' min='0' max='31' value='31' name='hp-iv' id='hp-iv'>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("atk")' type='number' min='0' max='31' value='31' name='atk-iv' id='atk-iv'>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("def")' type='number' min='0' max='31' value='31' name='def-iv' id='def-iv'>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("spa")' type='number' min='0' max='31' value='31' name='spa-iv' id='spa-iv'>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("spd")' type='number' min='0' max='31' value='31' name='spd-iv' id='spd-iv'>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("spe")' type='number' min='0' max='31' value='31' name='spe-iv' id='spe-iv'>
+								</td>
+							</tr>
+							<tr class='form-group' scope="row">
+								<th class="col col-sm"> 
+									Max EVs 
+								</th>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("hp")' type = "number" min='0' max='252' step='4' name = "hp-max" id = "hp-max" value = "252">
+									<small id='hp-stat-max'>
+										(Min Stat)
+									</small>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("atk")' type = "number" min='0' max='252' step='4' name = "atk-max" id = "atk-max" value = "252">
+									<small id='atk-stat-max'>
+										(Min Stat)
+									</small>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("def")' type = "number" min='0' max='252' step='4' name = "def-max" id = "def-max" value = "252">
+									<small id='def-stat-max'>
+										(Min Stat)
+									</small>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("spa")' type = "number" min='0' max='252' step='4' name = "spa-max" id = "spa-max" value = "252">
+									<small id='spa-stat-max'>
+										(Min Stat)
+									</small>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("spd")' type = "number" min='0' max='252' step='4' name = "spd-max" id = "spd-max" value = "252">
+									<small id='spd-stat-max'>
+										(Min Stat)
+									</small>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("spe")' type = "number" min='0' max='252' step='4' name = "spe-max" id = "spe-max" value = "252">
+									<small id='spe-stat-max'>
+										(Min Stat)
+									</small>
+								</td>
+							</tr>
+							<tr class="form-group">
+								<th class="col col-sm"> 
+									Min EVs 
+								</th>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("hp")' type = "number" min='0' max='252' step='4' name = "hp-min" id = "hp-min" value = "0">
+									<small id='hp-stat-min'>
+										(Min Stat)
+									</small>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("atk")' type = "number" min='0' max='252' step='4' name = "atk-min" id = "atk-min" value = "0">
+									<small id='atk-stat-min'>
+										(Min Stat)
+									</small>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("def")' type = "number" min='0' max='252' step='4' name = "def-min" id = "def-min" value = "0">
+									<small id='def-stat-min'>
+										(Min Stat)
+									</small>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("spa")' type = "number" min='0' max='252' step='4' name = "spa-min" id = "spa-min" value = "0">
+									<small id='spa-stat-min'>
+										(Min Stat)
+									</small>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("spd")' type = "number" min='0' max='252' step='4' name = "spd-min" id = "spd-min" value = "0">
+									<small id='spd-stat-min'>
+										(Min Stat)
+									</small>
+								</td>
+								<td class="col col-sm">
+									<input class='form-control input-sm col-xs-2' onChange='updateField("spe")' type = "number" min='0' max='252' step='4' name = "spe-min" id = "spe-min" value = "0">
+									<small id='spe-stat-min'>
+										(Min Stat)
+									</small>
+								</td>
+							</tr>
+							<tr class='form-group'>
+								<th class="col col-sm"> 
+									Filters
+								</th>
+								<td class="col col-sm">
+									<div class='form-check'>
+										<input class='form-check-input' type='checkbox' value="" id="hp-16m1">
+										<label class='form-check-label' for='hp-16m1'> /16 - 1 HP </label>
+										<small>
+											<!-- Tooltip title empty by default, we will initalise this in javascript-->
+											<a id='hp-16m1-tt' href='#' data-toggle="tooltip" data-placement="top" title="">
+												Details
+											</a>
+										</small>
+									</div>
+								</td>
+								<td class="col col-sm">
+									<div class='form-check'>
+										<input class='form-check-input' type='checkbox' value="" id="hp-10p1">
+										<label class='form-check-label' for='hp-10p1'> /10 + 1 HP </label>
+										<small>
+											<!-- Tooltip title empty by default, we will initalise this in javascript-->
+											<a id='hp-10p1-tt' href='#' data-toggle="tooltip" data-placement="top" title="">
+												Details
+											</a>
+										</small>
+									</div>
+								</td>
+								<td class="col col-sm">
+									<div class='form-check'>
+										<input class='form-check-input' type='checkbox' value="" id="hp-10m1">
+										<label class='form-check-label' for='hp-10m1'> /10 - 1 HP </label>
+										<small>
+											<!-- Tooltip title empty by default, we will initalise this in javascript-->
+											<a id='hp-10m1-tt' href='#' data-toggle="tooltip" data-placement="top" title="">
+												Details
+											</a>
+										</small>
+									</div>
+								</td>
+								<td class="col col-sm">
+									<div class='form-check'>
+										<input class='form-check-input' type='checkbox' value="" id="hp-4">
+										<label class='form-check-label' for='hp-4'> /4 HP </label>
+										<small>
+											<!-- Tooltip title empty by default, we will initalise this in javascript-->
+											<a id='hp-4-tt' href='#' data-toggle="tooltip" data-placement="top" title="">
+												Details
+											</a>
+										</small>
+									</div>
+								</td>
+								<td class="col col-sm">
+									<div class='form-check'>
+										<input class='form-check-input' type='checkbox' value="" id="hp-4p1">
+										<label class='form-check-label' for='hp-4p1'> /4 + 1 HP </label>
+										<small>
+											<!-- Tooltip title empty by default, we will initalise this in javascript-->
+											<a id='hp-4p1-tt' href='#' data-toggle="tooltip" data-placement="top" title="">
+												Details
+											</a>
+										</small>
+									</div>
+								</td>
+								<td class="col col-sm">
+									<div class='form-check'>
+										<input class='form-check-input' type='checkbox' value="" id="hpeven">
+										<label class='form-check-label' for='hpeven'> /2 HP </label>
+										<small>
+											<!-- Tooltip title empty by default, we will initalise this in javascript-->
+											<a id='hp-2-tt' href='#' data-toggle="tooltip" data-placement="top" title="">
+												Details
+											</a>
+										</small>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>
+									Menu
+								</th>
+								<th>
+									Time
+								</th>
+								<td>
+									<small id='time-label' class='text-secondary'>
+										HH:MM:SS
+									</small>
+								</td>
+								<th>
+									Complexity
+								</th>
+								<td>
+									<small id='complexity-label' class='text-secondary'>
+										n^x
+									</small>
+								</td>
+								<th>
+									Generate
+								</th>
+								<td>
+									<div id='solve'>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
 				</form>
 			</div>
-			</br>
-			<div class='menu' id='filter-menu'>
-				<h5> Filters </h5>
-				<div id='filter-menu'>
-					<input type='checkbox' class='report-cb' id='chk-burn'> Min. Weather / Burn Damage <!-- divisible by 16 minus one -->
-					<input type='checkbox' class='report-cb' id='chk-seed'> Min. Leech Seed Damage <!-- divisible by 8 minus one -->
-					<input type='checkbox' class='report-cb' id='chk-lorb'> Min. Life Orb Damage <!-- divisible by ten minus one -->
-					</br>
-					<input type='checkbox' class='report-cb' id='chk-strs'> Sitrus After Super Fang <!-- divisible by two -->
-					<input type='checkbox' class='report-cb' id='chk-fwam'> Super Sitrus After two Super Fangs <!-- divisible by four -->
-					<input type='checkbox' class='report-cb' id='chk-subf'> Four Substitutes <!-- divisible by four plus one -->
-					<input type='checkbox' class='report-cb' id='chk-subl'> Five Substitutes w/ Leftovers <!-- divisible by four minus one -->
-				</div>
-			</div>
-			</br>
-			<div class='menu' id='submit-menu'>
-				<p id='complexity-label'>
-					Complexity: (n^x) 
-				</p>
-				<p id='time-label'>
-					Expected Time: (mmhhss:ddmmyyyy)
-				</p>
-				<h5>
-					<a href="#" onClick='solve();'> Generate </a>
-				</h5>
-				</br>
-				<div id='output-table'>
+			<div class='menu' id='output-menu'>
+				<div id='output-div'>
+					<table id='output-table' class='table table-sm table-bordered table-hover' style="table-layout: fixed">
+					</table>
 				</div>
 			</div>
 		</div>
