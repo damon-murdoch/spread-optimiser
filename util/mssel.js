@@ -58,7 +58,7 @@ function selectMenuSprite(species)
 	{
 		switch(species['forme'])
 		{
-			case "PHD": extension = "Ph"; break;
+			case "PhD": extension = "Ph"; break;
 			case "Hoenn": extension = "H"; break;
 			case "Kalos": extension = "K"; break;
 			case "Unova": extension = "U"; break;
@@ -323,9 +323,7 @@ function selectMenuSprite(species)
 			case "Blue-Striped": extension = "B"; break;
 		}
 	}
-	
-	// console.log('Sprite Name: ' + sprite + extension + "MS.png");
-	
+
 	// Return the image URL, plus the new extension 
 	return sprite + extension + "MS.png";
 }
