@@ -17,7 +17,7 @@
 */
 function stat(B,I,E,L,N)
 {
-	return Math.floor(((Math.floor(I + 2 * B + (E/4)) * L / 100) + 5) * N);
+	return Math.floor(Math.floor(Math.floor(Math.floor(Math.floor(2 * B + I + Math.floor(E / 4)) * L) / 100) + 5) * N);
 }
 
 /*
@@ -37,7 +37,7 @@ function stat(B,I,E,L,N)
 */
 function hp(B,I,E,L)
 {
-	return Math.floor(((I + 2 * B + (E / 4)) * L / 100) + 10 + L);
+	return Math.floor(Math.floor(Math.floor(Math.floor(2 * B + I + Math.floor(E / 4)) * L) / 100) + L + 10);
 }
 
 function total(B,I,E,L,N)
@@ -50,8 +50,6 @@ function total(B,I,E,L,N)
 	{
 		s.push(stat(B[i],I[i],E[i],L,N[i]));
 	}
-	
-	
 	
 	return s;
 }
