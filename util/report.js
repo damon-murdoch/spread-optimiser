@@ -28,8 +28,6 @@ class Report
 	
 	setPage(position)
 	{
-		console.log('Updating page number! Current Page:',this.page,' ...');
-		
 		// Switch on the button pressed
 		switch(position)
 		{
@@ -61,14 +59,10 @@ class Report
 			// Update the live table
 			this.display();
 		}
-		
-		console.log('New Page:',this.page);
 	}
 	
 	setCount(count)
 	{
-		console.log('Old Page Count:',this.count);
-		
 		// Update the current count variable with the new count
 		this.count = count;
 		
@@ -84,8 +78,6 @@ class Report
 			// Update the live table
 			this.display();
 		}
-		
-		console.log('New Page Count:',this.count);
 	}
 	
 	getPageCount()
@@ -143,9 +135,7 @@ class Report
 			
 		// Last entry which will be shown on the page - either up to the end of the array or the end of the page calculated (whichever is closest)
 		let end = ((count * page) + count) < this.content.length ? ((count * page) + count) : this.content.length;
-			
-		console.log('Start:',start,'End:',end);
-			
+
 		// Iterate over all of the rows in the page
 		for(let i = start; i < end; i++)
 		{
