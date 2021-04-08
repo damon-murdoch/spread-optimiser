@@ -26,7 +26,7 @@ A list of future planned fixes / improvements are listed below.
 
 ### Bug Fixes / Suggestions
 If you experience any issues with the application, or would like to suggest improvements
-you can open an issue on Github[here](https://github.com/damon-murdoch/spread-optimiser/issues) or please feel free to contact me on twitter at [@SirScrubbington](https://twitter.com/SirScrubbington).
+you can open an issue on Github [here](https://github.com/damon-murdoch/spread-optimiser/issues) or please feel free to contact me on twitter at [@SirScrubbington](https://twitter.com/SirScrubbington).
 
 ## Sponsor this Project
 If you'd like to support this project and other future projects, 
