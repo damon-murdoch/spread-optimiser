@@ -15,9 +15,14 @@
 		Author: Damon Murdoch, based on Bulbapedia's conversion formula
 		Date: 21/11/2019
 */
-function stat(B,I,E,L,N)
-{
-	return Math.floor(Math.floor(Math.floor(Math.floor(Math.floor(2 * B + I + Math.floor(E / 4)) * L) / 100) + 5) * N);
+function stat(B, I, E, L, N) {
+  return Math.floor(
+    Math.floor(
+      Math.floor(
+        Math.floor(Math.floor(2 * B + I + Math.floor(E / 4)) * L) / 100
+      ) + 5
+    ) * N
+  );
 }
 
 /*
@@ -35,21 +40,24 @@ function stat(B,I,E,L,N)
 		Author: Damon Murdoch, based on Bulbapedia's conversion formula
 		Date: 21/11/2019
 */
-function hp(B,I,E,L)
-{
-	return Math.floor(Math.floor(Math.floor(Math.floor(2 * B + I + Math.floor(E / 4)) * L) / 100) + L + 10);
+function hp(B, I, E, L) {
+  return Math.floor(
+    Math.floor(
+      Math.floor(Math.floor(2 * B + I + Math.floor(E / 4)) * L) / 100
+    ) +
+      L +
+      10
+  );
 }
 
-function total(B,I,E,L,N)
-{
-	s = []
-	
-	s.push(hp(B[0],I[0],E[0],L));
-	
-	for(i=1; i<B.length;i++)
-	{
-		s.push(stat(B[i],I[i],E[i],L,N[i]));
-	}
-	
-	return s;
+function total(B, I, E, L, N) {
+  s = [];
+
+  s.push(hp(B[0], I[0], E[0], L));
+
+  for (let i = 1; i < B.length; i++) {
+    s.push(stat(B[i], I[i], E[i], L, N[i]));
+  }
+
+  return s;
 }

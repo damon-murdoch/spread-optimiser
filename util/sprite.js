@@ -1,1 +1,27 @@
-// verify_sprite(img: element): void// Given an (image) element, verify// that the image has been rendered// successfully.function verify_sprite(img){    // However, they do have two very useful properties: naturalWidth and    // naturalHeight. These give the true size of the image. If it failed    // to load, either of these should be zero.    if (img.naturalWidth === 0) {        return false;    }    // No other way of checking: assume it’s ok.    return true;}// get_sprite(id: int): void// Given a pokemon id, (attempt to) // update the sprite displayed in // the sprite box for the given pokemon.function set_sprite(lookup){	// Dereference the sprite object for the pokemon	let sprite = document.getElementById('select-sprite');	// Dereference the pokemon's number	// We will need this to find the sprite		// If it is not 3 digits, pad it with	// zeros until it is and convert it into	// a string	let num = pad(lookup.num,3,0);	// Switch on the different formes	switch(lookup.forme)	{		// Ash Pikachu		case 'Ash': num += 'A'; break;				// Hoenn Pikachu		case 'Hoenn': num += 'H'; break;				// Kanto Pikachu		case 'Kanto': num += 'K'; break;				// Original Pikachu		case 'Original': num += 'O'; break;				// Partner Pikachu		case 'Partner': num += 'P'; break;				// Sinnoh Pikachu		case 'Sinnoh': num += 'S'; break;				// Unova Pikachu		case 'Unova': num += 'U'; break;				// World Pikachu		case 'World': num += 'W'; break;				// Rotom Fan		case 'Fan': num += 'F'; break;				// Rotom Mow		case 'Mow': num += 'L'; break;				// Rotom Heat 		case 'Heat': num += 'O'; break;				// Rotom Frost		case 'Frost': num += 'R'; break;				// Rotom Wash		case 'Wash': num += 'W'; break;				// Giratina Origin		case 'Origin': num += 'O'; break;				// Therian Formes		case 'Therian': num += 'T'; break;				// Kyurem Black		case 'Black': num += 'B'; break;				// Kyurem White		case 'White': num += 'W'; break;				// Keldeo Resolute		case 'Resolute': num += 'R'; break;				// Genesect Douse		case 'Douse': num += 'B'; break;				// Genesect Shock		case 'Shock': num += 'Y'; break;				// Genesect Burn		case 'Burn': num += 'R'; break;				// Genesect Chill		case 'Chill': num += 'W'; break;				// Xerneas Neutral		case 'Neutral': num += 'N'; break;				// Zygarde Complete		case 'Complete': num += 'C'; break;				// Zygarde 10 Percent		case '10%': num += 'T'; break;				// Alolan Formes		case 'Alola': num += 'A'; break;				// Wishiwashi School		case 'School': num += 'Sc'; break;				// Necrozma Dusk Mane		case 'Dusk-Mane': num += 'DM'; break;				// Necrozma Dawn Wings		case 'Dawn-Wings': num += 'DW'; break;				// Galarian Formes		case 'Galar': num += 'G'; break;				// Galarian Zen Mode Darmanitan		case 'Galar-Zen': num += 'GZ'; break;				// Crowned Zacian / Zamazenta		case 'Crowned': num += 'C'; break;				// Gigantamax Formes		case 'Gmax': num += 'Gi'; break;					// Urshifu Rapid-Strike Gmax		case 'Rapid-Strike-Gmax': num += 'RGi'; break;	}		// Generate the filename	let filename = "img/box/" + num + ".png";	// Set the sprite source to the generated image name	sprite.src = filename;		// If the sprite is verified successfully	if (verify_sprite(sprite))	{		// Script has worked as expected, return true		return true	}	else	{		// No need to do anything	}		// If we make it here, sprite has not been configured		// Set it to the default egg sprite	sprite.src="img/box/Egg.png";		// False indicates sprite was not set properly	return false;}
+// get_sprite(id: int): void
+// Given a pokemon id, (attempt to)
+// update the sprite displayed in
+// the sprite box for the given pokemon.
+function set_sprite() {
+  // Get the selected pokemon from the select drop-down
+  const species_id = document.getElementById("pokemon").value;
+
+  // Find the species in the pokedex array
+  const species = Pokedex[species_id];
+
+  // Dereference the sprite object for the pokemon
+  const sprite = document.getElementById(`select-sprite`);
+
+  // If the search was successful
+  if (species) {
+
+    // Convert the species to lower case (and replace space with dash)
+    const species_lower = species.name.toLowerCase().replace(' ','-');
+
+    // Generate the filename
+    let filename = `img/box/${species_lower}.png`;
+
+    // Set the sprite source to the generated image name
+    sprite.src = filename;
+  }
+}
