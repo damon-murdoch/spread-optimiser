@@ -103,103 +103,18 @@ function spreadStr(spread) {
   );
 }
 
-function complexity() {
-  let powers = [
-    63, // 63 ^ 1 trivial
-    3969, // 63 ^ 2 trivial
-    250047, // 63 ^ 3 easy
-    15752961, // 63 ^ 4 medium
-    992436543, // 63 ^ 5 hard
-    62523502209, // 63 ^ 6, impossible
-  ];
-
-  let ratings = ["Trivial", "Trivial", "Easy", "Medium", "Hard", "Very Hard"];
-
-  let times = [
-    "Instant",
-    "Instant",
-    "Quick",
-    "Slow",
-    "Impossible",
-    "Impossible",
-  ];
-
-  op = [];
-
-  for (field in fields) {
-    let f = fields[field];
-
-    max = parseInt(document.getElementById(f + "-max").value);
-    min = parseInt(document.getElementById(f + "-min").value);
-
-    o = (max - min) / 4;
-
-    if (o) {
-      op.push(o);
-    } else {
-      op.push(1);
-    }
-  }
-
-  options = op[0] * op[1] * op[2] * op[3] * op[4] * op[5];
-
-  accuracy = powers[5];
-  closest = 0;
-
-  for (power in powers) {
-    p = powers[power];
-
-    acc = Math.abs(p - options);
-
-    if (acc < accuracy) {
-      accuracy = acc;
-      closest = power;
-    }
-  }
-
-  let time = document.getElementById("time-label");
-
-  // Specify the time which will be taken to complete the generation
-  time.innerHTML = "<small>" + times[closest].toString() + "</small>";
-
-  let complexity = document.getElementById("complexity-label");
-
-  // Specify the level of complexity for the current
-  complexity.innerHTML =
-    "<small>n" +
-    "<sup>" +
-    (parseInt(closest) + 1).toString() +
-    "</sup> (" +
-    ratings[closest] +
-    ") </small>";
-
-  // Retrieve the div containing the solve button
-  let solve = document.getElementById("solve");
-
-  // If algorithm complexity is three or less
-  if (closest < 4) {
-    // Enable the generate button in the form
-    solve.innerHTML =
-      // '<p><a href="#" class="text-success" onClick="solve();"> Generate </a></p>';
-      `<p><input type='submit' class='btn btn-link text-success' value='Generate'></p>`;
-  } else {
-    // Disable the generate button in the form
-    solve.innerHTML = '<p class="text-danger"> Generate </p>';
-  }
-}
-
 /*
-	Description: 
-		Triggered after a change, update the page elements
-		associated with that field, primarily the maximum
-		and minimum subtitle.
+  Description: 
+    Triggered after a change, update the page elements
+    associated with that field, primarily the maximum
+    and minimum subtitle.
 	
-	Parameters:	
-		F: Field to be updated
-		
-	Notes:
-		Author: Damon Murdoch
-		Date: 22/11/2019
+  Parameters:	
+    F: Field to be updated
+  	
+  Notes:
+    Author: Damon Murdoch
+    Date: 22/11/2019
 */
 function updateField(f) {
   // Dereference active Pokemon
@@ -228,9 +143,7 @@ function updateField(f) {
     // Use hp algorithm
     best = hp(bs[f], iv, max_ev, level);
     worst = hp(bs[f], iv, min_ev, level);
-  }
-  // Non-HP stat
-  else {
+  } else {
     // Use normal algorithm
     best = stat(bs[f], iv, max_ev, level, window.nature[f]);
     worst = stat(bs[f], iv, min_ev, level, window.nature[f]);
@@ -239,19 +152,55 @@ function updateField(f) {
   // Update the page elements with the new minimum and maximum stats
   document.getElementById(f + "-stat-max").innerHTML = "Max: " + best;
   document.getElementById(f + "-stat-min").innerHTML = "Min: " + worst;
+}
 
-  // Update the computational complexity of the algorithm
-  complexity();
+function updatePreset(f) {
+
+  // Get the stat preset element
+  const preset = document.getElementById("preset-" + f);
+
+  // Get the value for the preset
+  value = preset.value;
+
+  // Get the options from the value
+  options = value.split('/');
+
+  // If there are exactly 3 options
+  if (options.length == 3) {
+
+    // Dereference values
+    const iv = Math.min(Math.max(options[0], 0), 31);
+    const evmin = Math.min(Math.max(options[1], 0), 252);
+    const evmax = Math.min(Math.max(options[2], 0), 252);
+
+    // Update the iv value in the document
+    document.getElementById(f + '-iv').value = iv;
+
+    // Update the min ev value in the document
+    document.getElementById(f + '-min').value = evmin;
+
+    // Update the max ev value in the document
+    document.getElementById(f + '-max').value = evmax;
+
+    // Update field based on preset
+    updateField(f)
+  }
+
+  // Update spread
+  update();
 }
 
 function update() {
   // If an active Pokemon is selected
   if (window.active) {
     // Iterate over every field
-    for (field in fields) {
+    for (const field in fields) {
       // Update the selected field
       updateField(fields[field]);
     }
+
+    // Generate set
+    generateSpread()
   }
   // No active
   else {
@@ -260,8 +209,134 @@ function update() {
   }
 }
 
+function generateSpread() {
+
+  // Remaining evs
+  let remainder = 508;
+
+  // Spread Data
+  let spread = {
+
+  }
+
+  // Loop over the fields
+  for(const field of fields) {
+
+    // Break if no stats left
+    if (remainder == 0)
+      break;
+
+    // Generate field constrains
+    const field_data = {
+      "base": active.baseStats[field], 
+      "min": parseInt(document.getElementById(field + '-min').value),
+      "max": parseInt(document.getElementById(field + '-max').value),
+      "iv": parseInt(document.getElementById(field + '-iv').value), 
+    }
+
+    // Get the current ev value (min or remainder, if less)
+    const ev = Math.min(field_data["min"], remainder);
+
+    // Subtract 'ev' from remainder
+    remainder -= ev;
+
+    // Update the field data
+    field_data["ev"] = ev;
+
+    // Create the field constraints element
+    spread[field] = field_data;
+  }
+
+  // While remainder is non-zero
+  while(remainder >= 0){
+    // Next calculation step
+    const step = {
+
+    };
+
+    // Loop over the fields
+    for (const field of fields){
+      
+    }
+  }
+
+  // Loop over the fields
+  for (const field of fields){
+
+    // Get the result element for the field
+    const result = document.getElementById('result-' + field);
+
+    // If field is set
+    if (field in spread){
+      // Update the result value for the provided field
+      result.value = spread[field].ev;
+    }
+    else // Field not set
+    {
+      // Set to zero
+      result.value = 0;
+    }
+  }
+
+  // Return remaining evs
+  return remainder;
+}
+
+function getJumpStats(f) {
+
+  // Jump stats (evs)
+  const stats = [];
+
+  // Pokemon is active
+  if (window.active) {
+
+    // Get the level for the calculations
+    const level = document.getElementById('level').value;
+
+    // Get the base stats for the species
+    const baseStats = active.baseStats;
+
+    // Get the stat for the field
+    const baseStat = baseStats[f];
+
+    // Last value (placeholder)
+    let lastValue = 0;
+
+    // Loop over all of the evs
+    for (let e = 0; e < 256; e += 4) {
+      
+      // Get the stat for the nature
+      value = stat(baseStat, 31, e, level, 1.1);
+      
+      // Last value is not zero, and new value is a jump stat
+      if (lastValue > 0 && value == lastValue + 2) {
+
+        // Add 'e' to stats
+        stats.push(e)
+      }
+
+      // Update last value
+      lastValue = value;
+    }
+  }
+
+  // Return jump stats
+  return stats;
+}
+
 function setNature() {
-  selected = BattleNatures[document.getElementById("nature-select").value];
+
+  // Get the selected nature from the input field
+  const selected = BattleNatures[document.getElementById("nature-select").value];
+
+  // Default preset innerhtml contents
+  const selectTemplate = `<option value="none">Select Preset</option>
+    <option value="31/252/252">252</option>
+    <option value="31/4/252">4-252</option>
+    <option value="31/0/252">0-252</option>
+    <option value="31/4/4">4</option>
+    <option value="31/0/0">0</option>
+    <option value="0/0/0">0/0</option>`;
 
   window.nature = {
     hp: 1,
@@ -272,38 +347,49 @@ function setNature() {
     spe: 1,
   };
 
+  // Update window nature values
   window.nature[selected.pos] += 0.1;
   window.nature[selected.neg] -= 0.1;
 
-  for (field in fields) {
+  // Loop over the fields
+  for (const field in fields) {
     let f = fields[field];
 
-    if (f == "hp") {
-      continue;
+    // Field preset value
+    const preset = document.getElementById("preset-" + f);
+
+    // Reset preset inner html value
+    preset.innerHTML = selectTemplate;
+
+    switch (f) {
+      case 'hp':
+        continue; // Skip
+      case 'spe':
+        // Do speed tier stuff
+        break;
+      default:
+        // No jump stat, skip
+        if (selected.pos == selected.neg)
+          continue; // Skip
+        // Selected spread is positive
+        if (f == selected.pos) {
+          // Get the jump stats for the field
+          const stats = getJumpStats(f);
+
+          // Loop over the jump stats
+          for(const jumpStat of stats) {
+            // Add the inner html to the preset
+            preset.innerHTML += `<option value="31/${jumpStat}/${jumpStat}">${jumpStat}</option>`
+          }
+        }
+      break;
     }
 
+    // Update nature pos/neg select option
     document.getElementById(f + "-sel").value = window.nature[f].toString();
   }
 
   update();
-}
-
-function showReport(evt, bst) {
-  var i, tabContent, tabLinks;
-
-  tabcontent = document.getElementsByClassName("tabcontent");
-
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-
-  tablinks = document.getElementsByClassName("tablinks");
-
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-
-  document.getElementById("tab-" + bst.toString()).style.display = "block";
 }
 
 function loadPokemonData(value) {
