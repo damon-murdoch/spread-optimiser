@@ -166,6 +166,12 @@ function updatePreset(f) {
   // Get the options from the value
   options = value.split("/");
 
+  // Selected stat is 'hp'
+  if (f == 'hp') {
+    // Wipe existing hp filter
+    window.hpFilter = null;
+  }
+
   // If there are exactly 3 options
   if (options.length == 3) {
     // Dereference values
@@ -184,10 +190,20 @@ function updatePreset(f) {
 
     // Update field based on preset
     updateField(f);
-  }
 
-  // Reset dropdown
-  preset.value = "none";
+    // Reset dropdown
+    preset.value = "none";
+  }
+  else if (options.length == 1) // Less than three options
+  {
+    // Field is 'hp'
+    if (f == 'hp') {
+      // Parse the the preset/filter for hp
+      window.hpFilter = options[0];
+    }
+
+    // Leave dropdown as-is
+  }
 
   // Update spread
   update();
@@ -417,10 +433,13 @@ function setNature() {
     BattleNatures[document.getElementById("nature-select").value];
 
   // Default preset innerhtml contents
-  const selectTemplate = `<option value="none">Select Preset</option>
-    <option value="31/252/252">252</option>
+  const selectTemplate = `<option value="none">Preset</option>
     <option value="31/4/252">4-252</option>
+    <option value="31/4/244">4-244</option>
     <option value="31/0/252">0-252</option>
+    <option value="31/0/244">0-244</option>
+    <option value="31/252/252">252</option>
+    <option value="31/244/244">244</option>
     <option value="31/4/4">4</option>
     <option value="31/0/0">0</option>
     <option value="0/0/0">0/0</option>`;
@@ -445,13 +464,14 @@ function setNature() {
     // Field preset value
     const preset = document.getElementById("preset-" + f);
 
-    // Reset preset inner html value
-    preset.innerHTML = selectTemplate;
-
     switch (f) {
       case "hp":
         continue; // Skip
       case "spe":
+        // Reset preset inner html value
+        preset.innerHTML = selectTemplate;
+
+        // Get the speed benchmarks for the species
         const benchmarks = getSpeedBenchmarks();
 
         // Loop over the jump stats
@@ -462,6 +482,9 @@ function setNature() {
         // Do speed tier stuff
         break;
       default:
+        // Reset preset inner html value
+        preset.innerHTML = selectTemplate;
+
         // No jump stat, skip
         if (selected.pos == selected.neg) continue; // Skip
         // Selected spread is positive
@@ -508,7 +531,7 @@ function loadPokemonData(value) {
 
     // Reset ivs, min evs, max evs
     document.getElementById(f + "-iv").value = 31;
-    document.getElementById(f + "-min").value = 0;
+    document.getElementById(f + "-min").value = 4;
     document.getElementById(f + "-max").value = 252;
 
     // Reset the field base stats object to the Pokemon's default

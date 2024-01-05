@@ -59,6 +59,45 @@ function getHPRange(b, i, eMin, eMax, l) {
       continue; // Skip
     }
 
+    // Switch on hp filter
+    switch(window.hpFilter) {
+      case "16p1": // x/16 + 1
+        if ((currentStat > 16) && (currentStat % 16 != 1)) {
+          continue; // Skip if filter not matched
+        }
+        break;
+      case "16": // x/16
+        if ((currentStat > 16) && (currentStat % 16 != 0)) {
+          continue; // Skip if filter not matched
+        }
+        break;
+      case "10p1": // x/10 + 1
+        if ((currentStat > 10) && (currentStat % 10 != 1)) {
+          continue; // Skip if filter not matched
+        }
+        break;
+      case "4p1": // x/4 + 1
+        if ((currentStat > 4) && (currentStat % 4 != 1)) {
+          continue; // Skip if filter not matched
+        }
+        break;
+      case "4": // x/4
+        if ((currentStat > 4) && (currentStat % 4 != 0)) {
+          continue; // Skip if filter not matched
+        }
+        break;
+      case "2p1": // x/2 + 1
+        if ((currentStat > 2) && (currentStat % 2 != 1)) {
+          continue; // Skip if filter not matched
+        }
+        break;
+      case "2": // x/2
+        if ((currentStat > 2) && (currentStat % 2 != 0)) {
+          continue; // Skip if filter not matched
+        }
+        break;
+    }
+
     // Add to evs list
     evs.push(e);
 

@@ -253,53 +253,53 @@
                 <th class="col col-sm">Max EVs</th>
                 <td class="col col-sm">
                   <input class="form-control input-sm col-xs-2" onChange='updateField("hp")' type="number" min="0" max="252" step="4" name="hp-max" id="hp-max" value="252" />
-                  <small id="hp-stat-max"> (Min Stat) </small>
+                  <small id="hp-stat-max"> (Max Stat) </small>
                 </td>
                 <td class="col col-sm">
                   <input class="form-control input-sm col-xs-2" onChange='updateField("atk")' type="number" min="0" max="252" step="4" name="atk-max" id="atk-max" value="252" />
-                  <small id="atk-stat-max"> (Min Stat) </small>
+                  <small id="atk-stat-max"> (Max Stat) </small>
                 </td>
                 <td class="col col-sm">
                   <input class="form-control input-sm col-xs-2" onChange='updateField("def")' type="number" min="0" max="252" step="4" name="def-max" id="def-max" value="252" />
-                  <small id="def-stat-max"> (Min Stat) </small>
+                  <small id="def-stat-max"> (Max Stat) </small>
                 </td>
                 <td class="col col-sm">
                   <input class="form-control input-sm col-xs-2" onChange='updateField("spa")' type="number" min="0" max="252" step="4" name="spa-max" id="spa-max" value="252" />
-                  <small id="spa-stat-max"> (Min Stat) </small>
+                  <small id="spa-stat-max"> (Max Stat) </small>
                 </td>
                 <td class="col col-sm">
                   <input class="form-control input-sm col-xs-2" onChange='updateField("spd")' type="number" min="0" max="252" step="4" name="spd-max" id="spd-max" value="252" />
-                  <small id="spd-stat-max"> (Min Stat) </small>
+                  <small id="spd-stat-max"> (Max Stat) </small>
                 </td>
                 <td class="col col-sm">
                   <input class="form-control input-sm col-xs-2" onChange='updateField("spe")' type="number" min="0" max="252" step="4" name="spe-max" id="spe-max" value="252" />
-                  <small id="spe-stat-max"> (Min Stat) </small>
+                  <small id="spe-stat-max"> (Max Stat) </small>
                 </td>
               </tr>
               <tr class="form-group">
                 <th class="col col-sm">Min EVs</th>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("hp")' type="number" min="0" max="252" step="4" name="hp-min" id="hp-min" value="0" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("hp")' type="number" min="0" max="252" step="4" name="hp-min" id="hp-min" value="4" />
                   <small id="hp-stat-min"> (Min Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("atk")' type="number" min="0" max="252" step="4" name="atk-min" id="atk-min" value="0" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("atk")' type="number" min="0" max="252" step="4" name="atk-min" id="atk-min" value="4" />
                   <small id="atk-stat-min"> (Min Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("def")' type="number" min="0" max="252" step="4" name="def-min" id="def-min" value="0" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("def")' type="number" min="0" max="252" step="4" name="def-min" id="def-min" value="4" />
                   <small id="def-stat-min"> (Min Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("spa")' type="number" min="0" max="252" step="4" name="spa-min" id="spa-min" value="0" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("spa")' type="number" min="0" max="252" step="4" name="spa-min" id="spa-min" value="4" />
                   <small id="spa-stat-min"> (Min Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("spd")' type="number" min="0" max="252" step="4" name="spd-min" id="spd-min" value="0" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("spd")' type="number" min="0" max="252" step="4" name="spd-min" id="spd-min" value="4" />
                   <small id="spd-stat-min"> (Min Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("spe")' type="number" min="0" max="252" step="4" name="spe-min" id="spe-min" value="0" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("spe")' type="number" min="0" max="252" step="4" name="spe-min" id="spe-min" value="4" />
                   <small id="spe-stat-min"> (Min Stat) </small>
                 </td>
               </tr>
@@ -307,68 +307,42 @@
                 <th class="col col-sm">Preset</th>
                 <td class="col col-sm">
                   <select class="form-control" onChange='updatePreset("hp")' name="preset-hp" id="preset-hp">
-                    <option value="none">Select Preset</option>
-                    <option value="31/252/252">252</option>
+                    <option value="none">Preset/Filter</option>
                     <option value="31/4/252">4-252</option>
+                    <option value="31/4/244">4-244</option>
                     <option value="31/0/252">0-252</option>
+                    <option value="31/0/244">0-244</option>
+                    <option value="31/252/252">252</option>
+                    <option value="31/244/244">244</option>
                     <option value="31/4/4">4</option>
                     <option value="31/0/0">0</option>
-                    <option value="0/0/0">0/0</option>
+                    <option value="16p1">x/16 + 1</option>
+                    <option value="16">x/16</option>
+                    <option value="10p1">x/10 + 1</option>
+                    <option value="4p1">x/4 + 1</option>
+                    <option value="4">x/4</option>
+                    <option value="2p1">x/2 + 1</option>
+                    <option value="2">x/2</option>
                   </select>
                 </td>
                 <td class="col col-sm">
                   <select class="form-control" onChange='updatePreset("atk")' name="preset-atk" id="preset-atk">
-                    <option value="none">Select Preset</option>
-                    <option value="31/252/252">252</option>
-                    <option value="31/4/252">4-252</option>
-                    <option value="31/0/252">0-252</option>
-                    <option value="31/4/4">4</option>
-                    <option value="31/0/0">0</option>
-                    <option value="0/0/0">0/0</option>
                   </select>
                 </td>
                 <td class="col col-sm">
                   <select class="form-control" onChange='updatePreset("def")' name="preset-def" id="preset-def">
-                    <option value="none">Select Preset</option>
-                    <option value="31/252/252">252</option>
-                    <option value="31/4/252">4-252</option>
-                    <option value="31/0/252">0-252</option>
-                    <option value="31/4/4">4</option>
-                    <option value="31/0/0">0</option>
-                    <option value="0/0/0">0/0</option>
                   </select>
                 </td>
                 <td class="col col-sm">
                   <select class="form-control" onChange='updatePreset("spa")' name="preset-spa" id="preset-spa">
-                    <option value="none">Select Preset</option>
-                    <option value="31/252/252">252</option>
-                    <option value="31/4/252">4-252</option>
-                    <option value="31/0/252">0-252</option>
-                    <option value="31/4/4">4</option>
-                    <option value="31/0/0">0</option>
-                    <option value="0/0/0">0/0</option>
                   </select>
                 </td>
                 <td class="col col-sm">
                   <select class="form-control" onChange='updatePreset("spd")' name="preset-spd" id="preset-spd">
-                    <option value="none">Select Preset</option>
-                    <option value="31/252/252">252</option>
-                    <option value="31/4/252">4-252</option>
-                    <option value="31/0/252">0-252</option>
-                    <option value="31/4/4">4</option>
-                    <option value="31/0/0">0</option>
-                    <option value="0/0/0">0/0</option>
                   </select>
                 </td>
                 <td class="col col-sm">
                   <select class="form-control" onChange='updatePreset("spe")' name="preset-spe" id="preset-spe">
-                    <option value="none">Select Preset</option>
-                    <option value="31/252/252">252</option>
-                    <option value="31/4/252">4-252</option>
-                    <option value="31/0/252">0-252</option>
-                    <option value="31/4/4">4</option>
-                    <option value="31/0/0">0</option>
-                    <option value="0/0/0">0/0</option>
                   </select>
                 </td>
               </tr>
