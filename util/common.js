@@ -1,4 +1,3 @@
-
 // Stat field names
 const fields = ["hp", "atk", "def", "spa", "spd", "spe"];
 
@@ -152,10 +151,12 @@ function updateField(f) {
   // Update the page elements with the new minimum and maximum stats
   document.getElementById(f + "-stat-max").innerHTML = "Max: " + best;
   document.getElementById(f + "-stat-min").innerHTML = "Min: " + worst;
+
+  // Generate set
+  generateSpread();
 }
 
 function updatePreset(f) {
-
   // Get the stat preset element
   const preset = document.getElementById("preset-" + f);
 
@@ -163,28 +164,30 @@ function updatePreset(f) {
   value = preset.value;
 
   // Get the options from the value
-  options = value.split('/');
+  options = value.split("/");
 
   // If there are exactly 3 options
   if (options.length == 3) {
-
     // Dereference values
     const iv = Math.min(Math.max(options[0], 0), 31);
     const evmin = Math.min(Math.max(options[1], 0), 252);
     const evmax = Math.min(Math.max(options[2], 0), 252);
 
     // Update the iv value in the document
-    document.getElementById(f + '-iv').value = iv;
+    document.getElementById(f + "-iv").value = iv;
 
     // Update the min ev value in the document
-    document.getElementById(f + '-min').value = evmin;
+    document.getElementById(f + "-min").value = evmin;
 
     // Update the max ev value in the document
-    document.getElementById(f + '-max').value = evmax;
+    document.getElementById(f + "-max").value = evmax;
 
     // Update field based on preset
-    updateField(f)
+    updateField(f);
   }
+
+  // Reset dropdown
+  preset.value = "none";
 
   // Update spread
   update();
@@ -200,7 +203,7 @@ function update() {
     }
 
     // Generate set
-    generateSpread()
+    generateSpread();
   }
   // No active
   else {
@@ -209,89 +212,113 @@ function update() {
   }
 }
 
-function generateSpread() {
+function getSpeedBenchmarks() {
+  // Relevant base-speed numbers
+  const commonSpeeds = [50, 60, 70, 80, 90, 95, 100, 110, 120, 130, 140];
 
-  // Remaining evs
-  let remainder = 508;
+  // Speed ev benchmarks
+  const benchmarks = [];
 
-  // Spread Data
-  let spread = {
+  // Active species is defined
+  if (window.active) {
+    // Target speed stats
+    const targetSpeeds = [];
 
-  }
+    // Get the level for the calculations
+    const level = document.getElementById("level").value;
 
-  // Loop over the fields
-  for(const field of fields) {
+    // Get the base speed stat for the species
+    const baseSpeed = window.active.baseStats.spe;
 
-    // Break if no stats left
-    if (remainder == 0)
-      break;
+    // Get the boost for the current nature
+    const natureBoost = window.nature.spe;
 
-    // Generate field constrains
-    const field_data = {
-      "base": active.baseStats[field], 
-      "min": parseInt(document.getElementById(field + '-min').value),
-      "max": parseInt(document.getElementById(field + '-max').value),
-      "iv": parseInt(document.getElementById(field + '-iv').value), 
+    // Get minimum speed value for the level, nature, stats
+    const speedMin = stat(baseSpeed, 31, 0, level, natureBoost);
+
+    // Get maximum speed value for the level, nature, stats
+    const speedMax = stat(baseSpeed, 31, 252, level, natureBoost);
+
+    for (const commonSpeed of commonSpeeds) {
+      // No investment, neutral nature
+      const speedNo = stat(commonSpeed, 31, 0, level, 1.0);
+
+      // Full investment, neutral nature
+      const speedNeutral = stat(commonSpeed, 31, 252, level, 1.0);
+
+      // Full investment, positive nature
+      const speedPos = stat(commonSpeed, 31, 252, level, 1.1);
+
+      if (speedPos < speedMin) {
+        continue; // Not in range
+      } else if (speedNo > speedMax) {
+        break; // Out of range
+      }
+
+      // Add speeds to target speeds
+      targetSpeeds.push(speedPos);
+
+      // Check for neutral nature
+      if (speedNeutral > speedMin) {
+        targetSpeeds.push(speedNeutral);
+
+        // Check for no investment
+        if (speedNo > speedMin) {
+          targetSpeeds.push(speedNo);
+        }
+      }
     }
 
-    // Get the current ev value (min or remainder, if less)
-    const ev = Math.min(field_data["min"], remainder);
+    // Sort from slowest -> fastest
+    targetSpeeds.sort();
 
-    // Subtract 'ev' from remainder
-    remainder -= ev;
+    // Last speed stat
+    lastStat = speedMin;
 
-    // Update the field data
-    field_data["ev"] = ev;
+    // Loop from 0-252 speed evs
+    for (let evs = 4; evs <= 252; evs += 4) {
+      // No target speeds left, exit loop
+      if (targetSpeeds.length == 0) {
+        break;
+      }
 
-    // Create the field constraints element
-    spread[field] = field_data;
-  }
+      // Get the current speed stat
+      const speedStat = stat(baseSpeed, 31, evs, level, natureBoost);
 
-  // While remainder is non-zero
-  while(remainder >= 0){
-    // Next calculation step
-    const step = {
+      // Last stat is not defined, or new stat is higher
+      if (lastStat == null || speedStat > lastStat) {
+        // Loop over the target speeds
+        for (const target in targetSpeeds) {
+          // Get the stat for the target speed
+          const targetSpeed = targetSpeeds[target];
 
-    };
+          // We are faster than the target speed
+          if (speedStat > targetSpeed) {
+            // Add the evs to the benchmark
+            benchmarks.push(evs);
+            // Remove target from list
+            targetSpeeds.splice(target, 1);
+            break;
+          }
+        }
+      }
 
-    // Loop over the fields
-    for (const field of fields){
-      
+      // Update last stat
+      lastStat = speedStat;
     }
   }
 
-  // Loop over the fields
-  for (const field of fields){
-
-    // Get the result element for the field
-    const result = document.getElementById('result-' + field);
-
-    // If field is set
-    if (field in spread){
-      // Update the result value for the provided field
-      result.value = spread[field].ev;
-    }
-    else // Field not set
-    {
-      // Set to zero
-      result.value = 0;
-    }
-  }
-
-  // Return remaining evs
-  return remainder;
+  return benchmarks;
 }
 
 function getJumpStats(f) {
-
   // Jump stats (evs)
   const stats = [];
 
   // Pokemon is active
   if (window.active) {
-
     // Get the level for the calculations
-    const level = document.getElementById('level').value;
+    const level = document.getElementById("level").value;
 
     // Get the base stats for the species
     const baseStats = active.baseStats;
@@ -304,15 +331,13 @@ function getJumpStats(f) {
 
     // Loop over all of the evs
     for (let e = 0; e < 256; e += 4) {
-      
       // Get the stat for the nature
       value = stat(baseStat, 31, e, level, 1.1);
-      
+
       // Last value is not zero, and new value is a jump stat
       if (lastValue > 0 && value == lastValue + 2) {
-
         // Add 'e' to stats
-        stats.push(e)
+        stats.push(e);
       }
 
       // Update last value
@@ -324,10 +349,72 @@ function getJumpStats(f) {
   return stats;
 }
 
-function setNature() {
+function getBestNature() {
+  // pos/neg stats
+  let pos = null;
+  let neg = null;
 
+  // All stats which can be modified by natures
+  const natureStats = ["atk", "def", "spa", "spd", "spe"];
+
+  // Pokemon is active
+  if (window.active) {
+    // Get the base stats for the species
+    const baseStats = active.baseStats;
+
+    // Attack is greater than SpA
+    if (baseStats.atk > baseStats.spa){
+      // Make 'spa' negative stat
+      natureStats.splice(natureStats.indexOf('spa'), 1);
+      neg = 'spa';
+    }
+    else {
+      // Make 'atk' negative stat
+      natureStats.splice(natureStats.indexOf('atk'), 1);
+      neg = 'atk';
+    }
+
+    // Best field/stat
+    bestField = null;
+    bestStat = 0;
+
+    // Loop over the nature stats
+    for (const field of natureStats){
+      // Get the field from the stats
+      const stat = baseStats[field];
+
+      // New greater than best
+      if (stat > bestStat) {
+        // Update best field/stat
+        bestField = field;
+        bestStat = stat;
+      }
+    }
+
+    // Set 'pos' to bestField
+    pos = bestField;
+
+    // Loop over all of the battle natures
+    for (const nature in BattleNatures) {
+      // Get the nature data from the natures
+      const natureData = BattleNatures[nature];
+
+      // If positive and negative natures match
+      if (natureData.pos == pos && natureData.neg == neg) {
+        // Return the name of the nature
+        return nature;
+      }
+    }
+  }
+
+  // Return 'hardy' by default
+  return 'hardy';
+}
+
+function setNature() {
   // Get the selected nature from the input field
-  const selected = BattleNatures[document.getElementById("nature-select").value];
+  const selected =
+    BattleNatures[document.getElementById("nature-select").value];
 
   // Default preset innerhtml contents
   const selectTemplate = `<option value="none">Select Preset</option>
@@ -362,42 +449,46 @@ function setNature() {
     preset.innerHTML = selectTemplate;
 
     switch (f) {
-      case 'hp':
+      case "hp":
         continue; // Skip
-      case 'spe':
+      case "spe":
+        const benchmarks = getSpeedBenchmarks();
+
+        // Loop over the jump stats
+        for (const benchmark of benchmarks) {
+          // Add the inner html to the preset
+          preset.innerHTML += `<option value="31/${benchmark}/${benchmark}">${benchmark}</option>`;
+        }
         // Do speed tier stuff
         break;
       default:
         // No jump stat, skip
-        if (selected.pos == selected.neg)
-          continue; // Skip
+        if (selected.pos == selected.neg) continue; // Skip
         // Selected spread is positive
         if (f == selected.pos) {
           // Get the jump stats for the field
           const stats = getJumpStats(f);
 
           // Loop over the jump stats
-          for(const jumpStat of stats) {
+          for (const jumpStat of stats) {
             // Add the inner html to the preset
-            preset.innerHTML += `<option value="31/${jumpStat}/${jumpStat}">${jumpStat}</option>`
+            preset.innerHTML += `<option value="31/${jumpStat}/${jumpStat}">${jumpStat}</option>`;
           }
         }
-      break;
+        break;
     }
 
     // Update nature pos/neg select option
     document.getElementById(f + "-sel").value = window.nature[f].toString();
   }
 
+  // Update calcs
   update();
 }
 
 function loadPokemonData(value) {
   // Set active Pokemon to the provided one
   window.active = value;
-
-  // Reset natures to default
-  window.nature = {};
 
   // Update the Pokemon Sprite
 
@@ -409,14 +500,16 @@ function loadPokemonData(value) {
     // Get the active stat e.g. 'hp','at',...,'sp'
     f = fields[field];
 
-    // Reset the nature boost for the field to neutral
-    window.nature[f] = 1.0;
-
     // If the stat is not the HP stat (which is not affected by natures)
     if (f != "hp") {
       // Reset the window object back to the default
       document.getElementById(f + "-def").selected = "selected";
     }
+
+    // Reset ivs, min evs, max evs
+    document.getElementById(f + "-iv").value = 31;
+    document.getElementById(f + "-min").value = 0;
+    document.getElementById(f + "-max").value = 252;
 
     // Reset the field base stats object to the Pokemon's default
     document.getElementById(f + "-base").value = active.baseStats[f];
@@ -443,6 +536,12 @@ function loadPokemonData(value) {
 
   // Append the created sprite object to the parent positioning object
   document.getElementById("select-sprite").appendChild(img);
+
+  // Get the best nature for the species
+  const bestNature = getBestNature();
+
+  // Reset natures to default
+  document.getElementById("nature-select").value = bestNature;
 
   // Update all of the fields on the webpage
   setNature();
