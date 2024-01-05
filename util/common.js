@@ -379,7 +379,7 @@ function getBestNature() {
     const baseStats = active.baseStats;
 
     // Attack is greater than SpA
-    if (baseStats.atk > baseStats.spa){
+    if (baseStats.atk > baseStats.spa) {
       // Make 'spa' negative stat
       natureStats.splice(natureStats.indexOf('spa'), 1);
       neg = 'spa';
@@ -395,7 +395,7 @@ function getBestNature() {
     bestStat = 0;
 
     // Loop over the nature stats
-    for (const field of natureStats){
+    for (const field of natureStats) {
       // Get the field from the stats
       const stat = baseStats[field];
 
@@ -588,3 +588,59 @@ function changePokemonData() {
     console.warn(`Unrecognised species: '${pokemon}'!`);
   }
 }
+
+function exportSpread() {
+
+  // EV Spread String
+  let spreadString = [];
+
+  // Loop over the indexes
+  for (const index in fields) {
+
+    // Get the field data
+    const field = fields[index];
+
+    // Get the result for the field
+    const result = parseInt(document.getElementById('result-' + field).value);
+
+    if (result > 0) {
+      spreadString.push(`${result} ${pretty_fields[index]}`);
+    }
+  }
+
+  // Join and return the spread string
+  return `EVs: ${spreadString.join(" / ")}`;
+}
+
+// --- Add Event Listeners --- //
+
+// Export to clipboard event listener
+document
+  .getElementById("paste-export")
+  .addEventListener("click", async (event) => {
+    // If the clipboard module exists in the client's browser
+    if (navigator.clipboard) {
+
+      // Export spread ev data
+      const spread = exportSpread();
+
+      try {
+        // Copy the string to the clipboard
+        await navigator.clipboard.writeText(spread);
+
+        // Successful copy alert
+        window.alert(
+          " Spread copied to clipboard successfully."
+        );
+      } catch (err) {
+        // Report the failure to the error console
+        console.error(
+          "Failed to copy content `" + spread + "`! Reason: `" + err + "`"
+        );
+      }
+    } // Clipboard module is not available
+    else {
+      // Report failure to console, continue
+      console.error("Clipboard interaction not supported by browser.");
+    }
+  });
