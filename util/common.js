@@ -592,24 +592,46 @@ function changePokemonData() {
 function exportSpread() {
 
   // EV Spread String
-  let spreadString = [];
+  let evString = [];
+  let ivString = [];
 
-  // Loop over the indexes
-  for (const index in fields) {
+  // Species name
+  let name = 'none';
 
-    // Get the field data
-    const field = fields[index];
+  // Get the nature for the set
+  const nature = document.getElementById('nature-select').value;
 
-    // Get the result for the field
-    const result = parseInt(document.getElementById('result-' + field).value);
+  // Window is defined
+  if (window.active) {
 
-    if (result > 0) {
-      spreadString.push(`${result} ${pretty_fields[index]}`);
+    // Get name from active species
+    name = window.active.name;
+
+    // Loop over the indexes
+    for (const index in fields) {
+
+      // Get the field data
+      const field = fields[index];
+
+      // Get the ev result for the field
+      const ev = parseInt(document.getElementById('result-' + field).value);
+      if (ev > 0) { evString.push(`${ev} ${pretty_fields[index]}`); }
+
+      // Get the ev result for the field
+      const iv = parseInt(document.getElementById(field + '-iv').value);
+      if (iv < 31) { ivString.push(`${iv} ${pretty_fields[index]}`); }
     }
+
+    // Join ev / iv string arrays
+    evString = `EVs: ${evString.join(' / ')}`;
+    ivString = `IVs: ${ivString.join(' / ')}`;
   }
 
-  // Join and return the spread string
-  return `EVs: ${spreadString.join(" / ")}`;
+  // Build final string
+  const finalString = `${name}\n${evString}\n${ivString}\n${nature} nature`;
+
+  // Return final string
+  return finalString;
 }
 
 // --- Add Event Listeners --- //
