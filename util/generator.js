@@ -12,7 +12,7 @@ function getHPDelta(b, i, e1, e2, l) {
 function getStatDelta(b, i, e1, e2, l, n) {
   const d1 = stat(b, i, e1, l, n);
   const d2 = stat(b, i, e2, l, n);
-  return d2 / d1;
+  return (d2 / d1);
 }
 
 // Generic handler for both delta funcs
@@ -60,7 +60,7 @@ function getHPRange(b, i, eMin, eMax, l) {
     }
 
     // Switch on hp filter
-    switch(window.hpFilter) {
+    switch (window.hpFilter) {
       case "16p1": // x/16 + 1
         if ((currentStat > 16) && (currentStat % 16 != 1)) {
           continue; // Skip if filter not matched
@@ -211,23 +211,30 @@ function generateSpread() {
 
       // Spread has not reached the max
       if (fieldData.completed == false && fieldData.evs < fieldData.max) {
-        // Get next value in the range array
-        const nextValue =
-          fieldData.range[fieldData.range.indexOf(fieldData.evs) + 1];
 
-        // Update deltas array
-        deltas[field] = getDelta(
-          field,
-          fieldData.base,
-          fieldData.ivs,
-          fieldData.evs,
-          nextValue,
-          level,
-          fieldData.nature
-        );
+        // Get the index of the next value
+        const nextIndex = fieldData.range.indexOf(fieldData.evs) + 1;
 
-        // Update evs array
-        evs[field] = nextValue;
+        // If the next index is in range
+        if (nextIndex < fieldData.range.length) {
+          // Get next value in the range array
+          const nextValue = fieldData.range[nextIndex];
+
+          // Update deltas array
+          deltas[field] = getDelta(
+            field,
+            fieldData.base,
+            fieldData.ivs,
+            fieldData.evs,
+            nextValue,
+            level,
+            fieldData.nature
+          );
+
+          // Update evs array
+          evs[field] = nextValue;
+        }
+
       }
     }
 

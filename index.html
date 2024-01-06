@@ -4,7 +4,7 @@
 
 <head>
   <!-- Webpage Title -->
-  <title>EV Spread optimiser</title>
+  <title>EV Spread Optimiser 2.0</title>
 
   <!-- Custom Icon -->
   <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
@@ -52,15 +52,14 @@
     </div>
     <div id="body" class="container bg-dark rounded overflow-auto my-2" style="opacity: 0.8; max-height: 90vh">
       <div id="title" class="text-light text-center">
-        <h2>Pokemon EV Spread Optimiser</h2>
+        <h2>Pokémon EV Spread Optimiser 2.0</h2>
         <div class="container-fluid">
           <p class="text-muted lead">
             Developed by
             <a class="text-secondary" href="https://twitter.com/SirScrubbington">Damon Murdoch</a>
           </p>
           <p class="text-muted lead">
-            Prefer the old version? Click
-            <a class="text-secondary" href="https://www.dragapult.xyz/spread-optimiser-legacy">here</a>
+            Need help? <a class="text-secondary" href="https://github.com/damon-murdoch/spread-optimiser/blob/master/usage.md">Read the tutorial here</a>
           </p>
         </div>
       </div>
@@ -79,7 +78,8 @@
           </div>
           <div id="select-level" class="col col-md-auto">
             <label class="text-secondary"> Level </label>
-            <input id="level" class="form-control" type="number" min="1" max="100" value="50" name="level" placeholder="Current: (Level)" onChange="update()" />
+            <input id="level" class="form-control" type="number" min="1" max="100" value="50" name="level"
+              placeholder="Current: (Level)" onChange="update()" />
           </div>
         </div>
         <div id="table-menu" class="row justify-content-md-center mt-2">
@@ -113,28 +113,35 @@
               <tr class="form-group">
                 <th class="col col-sm" scope="row">Base</th>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" type="text" name="hp-base" id="hp-base" value="" readonly />
+                  <input class="form-control input-sm col-xs-2" type="text" name="hp-base" id="hp-base" value=""
+                    readonly />
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" type="text" name="atk-base" id="atk-base" value="" readonly />
+                  <input class="form-control input-sm col-xs-2" type="text" name="atk-base" id="atk-base" value=""
+                    readonly />
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" type="text" name="def-base" id="def-base" value="" readonly />
+                  <input class="form-control input-sm col-xs-2" type="text" name="def-base" id="def-base" value=""
+                    readonly />
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" type="text" name="spa-base" id="spa-base" value="" readonly />
+                  <input class="form-control input-sm col-xs-2" type="text" name="spa-base" id="spa-base" value=""
+                    readonly />
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" type="text" name="spd-base" id="spd-base" value="" readonly />
+                  <input class="form-control input-sm col-xs-2" type="text" name="spd-base" id="spd-base" value=""
+                    readonly />
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" type="text" name="spe-base" id="spe-base" value="" readonly />
+                  <input class="form-control input-sm col-xs-2" type="text" name="spe-base" id="spe-base" value=""
+                    readonly />
                 </td>
               </tr>
               <tr class="form-group">
                 <th class="col col-sm" scope="row">Nature</th>
                 <td class="col col-sm">
-                  <select form="form-table" name="nature" class="form-control" id="nature-select" onChange="setNature()">
+                  <select form="form-table" name="nature" class="form-control" id="nature-select"
+                    onChange="setNature()">
                     <option value="hardy">Hardy</option>
                     <option value="lonely">Lonely</option>
                     <option value="brave">Brave</option>
@@ -231,75 +238,93 @@
               <tr class="form-group" scope="row">
                 <th class="col col-sm">IVs</th>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("hp")' type="number" min="0" max="31" value="31" name="hp-iv" id="hp-iv" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("hp")' type="number" min="0"
+                    max="31" value="31" name="hp-iv" id="hp-iv" />
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("atk")' type="number" min="0" max="31" value="31" name="atk-iv" id="atk-iv" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("atk")' type="number" min="0"
+                    max="31" value="31" name="atk-iv" id="atk-iv" />
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("def")' type="number" min="0" max="31" value="31" name="def-iv" id="def-iv" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("def")' type="number" min="0"
+                    max="31" value="31" name="def-iv" id="def-iv" />
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("spa")' type="number" min="0" max="31" value="31" name="spa-iv" id="spa-iv" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("spa")' type="number" min="0"
+                    max="31" value="31" name="spa-iv" id="spa-iv" />
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("spd")' type="number" min="0" max="31" value="31" name="spd-iv" id="spd-iv" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("spd")' type="number" min="0"
+                    max="31" value="31" name="spd-iv" id="spd-iv" />
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("spe")' type="number" min="0" max="31" value="31" name="spe-iv" id="spe-iv" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("spe")' type="number" min="0"
+                    max="31" value="31" name="spe-iv" id="spe-iv" />
                 </td>
               </tr>
               <tr class="form-group" scope="row">
                 <th class="col col-sm">Max EVs</th>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("hp")' type="number" min="0" max="252" step="4" name="hp-max" id="hp-max" value="252" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("hp")' type="number" min="0"
+                    max="252" step="4" name="hp-max" id="hp-max" value="252" />
                   <small id="hp-stat-max"> (Max Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("atk")' type="number" min="0" max="252" step="4" name="atk-max" id="atk-max" value="252" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("atk")' type="number" min="0"
+                    max="252" step="4" name="atk-max" id="atk-max" value="252" />
                   <small id="atk-stat-max"> (Max Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("def")' type="number" min="0" max="252" step="4" name="def-max" id="def-max" value="252" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("def")' type="number" min="0"
+                    max="252" step="4" name="def-max" id="def-max" value="252" />
                   <small id="def-stat-max"> (Max Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("spa")' type="number" min="0" max="252" step="4" name="spa-max" id="spa-max" value="252" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("spa")' type="number" min="0"
+                    max="252" step="4" name="spa-max" id="spa-max" value="252" />
                   <small id="spa-stat-max"> (Max Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("spd")' type="number" min="0" max="252" step="4" name="spd-max" id="spd-max" value="252" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("spd")' type="number" min="0"
+                    max="252" step="4" name="spd-max" id="spd-max" value="252" />
                   <small id="spd-stat-max"> (Max Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("spe")' type="number" min="0" max="252" step="4" name="spe-max" id="spe-max" value="252" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("spe")' type="number" min="0"
+                    max="252" step="4" name="spe-max" id="spe-max" value="252" />
                   <small id="spe-stat-max"> (Max Stat) </small>
                 </td>
               </tr>
               <tr class="form-group">
                 <th class="col col-sm">Min EVs</th>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("hp")' type="number" min="0" max="252" step="4" name="hp-min" id="hp-min" value="4" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("hp")' type="number" min="0"
+                    max="252" step="4" name="hp-min" id="hp-min" value="4" />
                   <small id="hp-stat-min"> (Min Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("atk")' type="number" min="0" max="252" step="4" name="atk-min" id="atk-min" value="4" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("atk")' type="number" min="0"
+                    max="252" step="4" name="atk-min" id="atk-min" value="4" />
                   <small id="atk-stat-min"> (Min Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("def")' type="number" min="0" max="252" step="4" name="def-min" id="def-min" value="4" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("def")' type="number" min="0"
+                    max="252" step="4" name="def-min" id="def-min" value="4" />
                   <small id="def-stat-min"> (Min Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("spa")' type="number" min="0" max="252" step="4" name="spa-min" id="spa-min" value="4" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("spa")' type="number" min="0"
+                    max="252" step="4" name="spa-min" id="spa-min" value="4" />
                   <small id="spa-stat-min"> (Min Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("spd")' type="number" min="0" max="252" step="4" name="spd-min" id="spd-min" value="4" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("spd")' type="number" min="0"
+                    max="252" step="4" name="spd-min" id="spd-min" value="4" />
                   <small id="spd-stat-min"> (Min Stat) </small>
                 </td>
                 <td class="col col-sm">
-                  <input class="form-control input-sm col-xs-2" onChange='updateField("spe")' type="number" min="0" max="252" step="4" name="spe-min" id="spe-min" value="4" />
+                  <input class="form-control input-sm col-xs-2" onChange='updateField("spe")' type="number" min="0"
+                    max="252" step="4" name="spe-min" id="spe-min" value="4" />
                   <small id="spe-stat-min"> (Min Stat) </small>
                 </td>
               </tr>

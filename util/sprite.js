@@ -16,7 +16,7 @@ function set_sprite() {
   if (species) {
 
     // Convert the species to lower case (and replace space with dash)
-    const species_lower = species.name.toLowerCase().replace(' ','-');
+    const species_lower = species.name.toLowerCase().replace(' ', '-');
 
     // Generate the filename
     let filename = `img/box/${species_lower}.png`;

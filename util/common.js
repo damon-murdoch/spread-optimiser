@@ -620,7 +620,7 @@ function getEvSpread() {
   }
 
   // At least one specified ev
-  if (evSpread.length > 0){
+  if (evSpread.length > 0) {
     // Return EV Spread array, joined as string
     return `EVs: ${evSpread.join(' / ')}`;
   }
@@ -648,7 +648,7 @@ function getIvSpread() {
   }
 
   // At least one specified iv
-  if (ivSpread.length > 0){
+  if (ivSpread.length > 0) {
     // Return IV Spread array, joined as string
     return `IVs: ${ivSpread.join(' / ')}`;
   }
@@ -678,11 +678,11 @@ function exportSpread() {
 
   // Add ev spread, if present
   const evs = getEvSpread();
-  if (evs) {spread.push(evs);}
+  if (evs) { spread.push(evs); }
 
   // Add iv spread, if present
   const ivs = getIvSpread();
-  if (ivs) {spread.push(ivs);}
+  if (ivs) { spread.push(ivs); }
 
   // Get the nature for the set
   const nature = document.getElementById('nature-select').value;
@@ -694,7 +694,7 @@ function exportSpread() {
   return spread.join(`\n`);
 }
 
-async function copyToClipboard(content){
+async function copyToClipboard(content) {
   // If the clipboard module exists in the client's browser
   if (navigator.clipboard) {
 

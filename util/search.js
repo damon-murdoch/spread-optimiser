@@ -4,7 +4,7 @@ function populate_species(id) {
   const select = document.getElementById(id);
 
   // Loop over the pokedex
-  for(const key of PokedexKeys){
+  for (const key of PokedexKeys) {
     // Get the species from the key
     const species = Pokedex[key];
 
