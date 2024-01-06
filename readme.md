@@ -3,12 +3,13 @@
 ### Created by Damon Murdoch ([@SirScrubbington](https://twitter.com/SirScrubbington))
 
 ## Introduction
-The Spread Optimiser is a html/css/js application which given a Pokemon, Nature, IVs and the
-minimum and maximum EV constraints calculates the base stat total of every possible EV spread
-combination with the given constraints and provides them to a user in a table. The table is
-able to be sorted by each stat, including overall base stat total. This was developed to allow
-competitive Pokemon players to develop better optimised EV spreads, and is intended to
-compliment spread development. 
+This tool is an EV Spread Optimiser for competitive Pokemon, where constraints can be applied
+in an attempt to generate an ev spread which invests in relevant stats which provide the most
+benefit overall. This is done by investing more in lower base-stats, and higher base stats are
+generally boosted by nature and / or can be set to use a 'jump stat' (where 4/8 evs provide 2 
+stat points instead of 1). Speed can be constrained to a relevant benchmark (outspeeding jolly
+252 base 100s, etc.) or can be customised to fit your own benchmarks. For more information on
+how this tool should be used, please see [usage.md](./usage.md)
 
 ## Live Application
 The web address for the live application can be accessed 

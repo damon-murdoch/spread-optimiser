@@ -122,11 +122,24 @@ function updateField(f) {
   // Dereference active Pokemon base stats
   let bs = active.baseStats;
 
-  // Integer contained in the webpage maximum EV input field for the field
-  max_ev = parseInt(document.getElementById(f + "-max").value);
+  // Min/Max EV input field for the fields
+  const max = document.getElementById(f + "-max");
+  const min = document.getElementById(f + "-min");
 
-  // Integer contained in the webpage minimum EV input field for the field
-  min_ev = parseInt(document.getElementById(f + "-min").value);
+  // Parse int from max input field
+  let max_ev = parseInt(max.value);
+
+  // Parse int from min input field
+  let min_ev = parseInt(min.value);
+
+  // Max is less than min
+  if (max_ev < min_ev) {
+    // Set max to min
+    max.value = min.value;
+
+    // Refresh max_ev
+    max_ev = min_ev;
+  }
 
   // Integer contained in the webpage level input field
   level = parseInt(document.getElementById("level").value);
@@ -589,80 +602,137 @@ function changePokemonData() {
   }
 }
 
-function exportSpread() {
+
+function getEvSpread() {
 
   // EV Spread String
-  let evString = [];
-  let ivString = [];
+  const evSpread = [];
+
+  // Loop over the indexes
+  for (const index in fields) {
+
+    // Get the field data
+    const field = fields[index];
+
+    // Get the ev result for the field
+    const ev = parseInt(document.getElementById('result-' + field).value);
+    if (ev > 0) { evSpread.push(`${ev} ${pretty_fields[index]}`); }
+  }
+
+  // At least one specified ev
+  if (evSpread.length > 0){
+    // Return EV Spread array, joined as string
+    return `EVs: ${evSpread.join(' / ')}`;
+  }
+  else // No specified evs
+  {
+    // Return null
+    return null;
+  }
+}
+
+function getIvSpread() {
+
+  // EV Spread String
+  const ivSpread = [];
+
+  // Loop over the indexes
+  for (const index in fields) {
+
+    // Get the field data
+    const field = fields[index];
+
+    // Get the ev result for the field
+    const iv = parseInt(document.getElementById(field + '-iv').value);
+    if (iv < 31) { ivSpread.push(`${iv} ${pretty_fields[index]}`); }
+  }
+
+  // At least one specified iv
+  if (ivSpread.length > 0){
+    // Return IV Spread array, joined as string
+    return `IVs: ${ivSpread.join(' / ')}`;
+  }
+  else // No specified ivs
+  {
+    // Return null
+    return null;
+  }
+}
+
+function exportSpread() {
+
+  // Spread string array
+  const spread = [];
 
   // Species name
   let name = 'none';
 
+  // Window is defined
+  if (window.active) {
+    // Get name from active species
+    name = window.active.name;
+  }
+
+  // Add species name to spread
+  spread.push(name);
+
+  // Add ev spread, if present
+  const evs = getEvSpread();
+  if (evs) {spread.push(evs);}
+
+  // Add iv spread, if present
+  const ivs = getIvSpread();
+  if (ivs) {spread.push(ivs);}
+
   // Get the nature for the set
   const nature = document.getElementById('nature-select').value;
 
-  // Window is defined
-  if (window.active) {
-
-    // Get name from active species
-    name = window.active.name;
-
-    // Loop over the indexes
-    for (const index in fields) {
-
-      // Get the field data
-      const field = fields[index];
-
-      // Get the ev result for the field
-      const ev = parseInt(document.getElementById('result-' + field).value);
-      if (ev > 0) { evString.push(`${ev} ${pretty_fields[index]}`); }
-
-      // Get the ev result for the field
-      const iv = parseInt(document.getElementById(field + '-iv').value);
-      if (iv < 31) { ivString.push(`${iv} ${pretty_fields[index]}`); }
-    }
-
-    // Join ev / iv string arrays
-    evString = `EVs: ${evString.join(' / ')}`;
-    ivString = `IVs: ${ivString.join(' / ')}`;
-  }
-
-  // Build final string
-  const finalString = `${name}\n${evString}\n${ivString}\n${nature} nature`;
+  // Add nature (Capitalised)
+  spread.push(`${toCapitalCase(nature)} Nature`);
 
   // Return final string
-  return finalString;
+  return spread.join(`\n`);
+}
+
+async function copyToClipboard(content){
+  // If the clipboard module exists in the client's browser
+  if (navigator.clipboard) {
+
+    try {
+      // Copy the string to the clipboard
+      await navigator.clipboard.writeText(content);
+
+      // Successful copy alert
+      window.alert(
+        "Content copied to clipboard successfully."
+      );
+    } catch (err) {
+      // Report the failure to the error console
+      console.error(
+        "Failed to copy content `" + content + "`! Reason: `" + err + "`"
+      );
+    }
+  } // Clipboard module is not available
+  else {
+    // Report failure to console, continue
+    console.error("Clipboard interaction not supported by browser.");
+  }
 }
 
 // --- Add Event Listeners --- //
 
-// Export to clipboard event listener
+// Copy EVs event listener
 document
-  .getElementById("paste-export")
+  .getElementById("copy-evs")
   .addEventListener("click", async (event) => {
-    // If the clipboard module exists in the client's browser
-    if (navigator.clipboard) {
+    // Copy the ev spread to the clipboard
+    await copyToClipboard(getEvSpread());
+  });
 
-      // Export spread ev data
-      const spread = exportSpread();
-
-      try {
-        // Copy the string to the clipboard
-        await navigator.clipboard.writeText(spread);
-
-        // Successful copy alert
-        window.alert(
-          " Spread copied to clipboard successfully."
-        );
-      } catch (err) {
-        // Report the failure to the error console
-        console.error(
-          "Failed to copy content `" + spread + "`! Reason: `" + err + "`"
-        );
-      }
-    } // Clipboard module is not available
-    else {
-      // Report failure to console, continue
-      console.error("Clipboard interaction not supported by browser.");
-    }
+// Copy All event listener
+document
+  .getElementById("copy-all")
+  .addEventListener("click", async (event) => {
+    // Copy the ev spread to the clipboard
+    await copyToClipboard(exportSpread());
   });
