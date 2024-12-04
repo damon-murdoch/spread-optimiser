@@ -223,6 +223,10 @@ function updatePreset(f) {
 }
 
 function update() {
+
+  // Set nature
+  setNature();
+
   // If an active Pokemon is selected
   if (window.active) {
     // Iterate over every field
@@ -517,9 +521,6 @@ function setNature() {
     // Update nature pos/neg select option
     document.getElementById(f + "-sel").value = window.nature[f].toString();
   }
-
-  // Update calcs
-  update();
 }
 
 function loadPokemonData(value) {
@@ -580,7 +581,9 @@ function loadPokemonData(value) {
   document.getElementById("nature-select").value = bestNature;
 
   // Update all of the fields on the webpage
-  setNature();
+  // setNature();
+
+  update();
 }
 
 // Runs whenever the Pokemon lookup field is modified
@@ -674,7 +677,7 @@ function exportSpread() {
   }
 
   // Add species name to spread
-  spread.push(name);
+  spread.push(`${name} @ No Item`);
 
   // Add ev spread, if present
   const evs = getEvSpread();

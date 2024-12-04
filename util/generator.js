@@ -1,11 +1,17 @@
-// HP Value Offset Multiplier
-const HP_MULTIPLIER = 1.0033;
+// Custom hp modifier
+function getHPMod() {
+  const ratio = parseInt(document.getElementById('ratio').value);
+  return 1.0 + (0.0001 * ratio);
+}
 
 // Get change in hp from e1 to e2
 function getHPDelta(b, i, e1, e2, l) {
   const d1 = hp(b, i, e1, l);
   const d2 = hp(b, i, e2, l);
-  return (d2 / d1) * HP_MULTIPLIER;
+  
+  console.log(d2,d1,getHPMod());
+
+  return (d2 / d1) * getHPMod();
 }
 
 // Get change in stat from e1 and e2
@@ -73,6 +79,11 @@ function getHPRange(b, i, eMin, eMax, l) {
         break;
       case "10p1": // x/10 + 1
         if ((currentStat > 10) && (currentStat % 10 != 1)) {
+          continue; // Skip if filter not matched
+        }
+        break;
+      case "10m1": // x/10 - 1
+        if ((currentStat > 10) && (currentStat % 10 != 9)) {
           continue; // Skip if filter not matched
         }
         break;

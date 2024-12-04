@@ -79,7 +79,12 @@
           <div id="select-level" class="col col-md-auto">
             <label class="text-secondary"> Level </label>
             <input id="level" class="form-control" type="number" min="1" max="100" value="50" name="level"
-              placeholder="Current: (Level)" onChange="update()" />
+              onChange="update()" />
+          </div>
+          <div id="select-ratio" class="col col-md-auto">
+            <label class="text-secondary"> HP Multiplier (%) </label>
+            <input id="ratio" class="form-control" type="number" min="1" max="100" value="50" name="ratio"
+              onChange="update()" />
           </div>
         </div>
         <div id="table-menu" class="row justify-content-md-center mt-2">
@@ -140,8 +145,7 @@
               <tr class="form-group">
                 <th class="col col-sm" scope="row">Nature</th>
                 <td class="col col-sm">
-                  <select form="form-table" name="nature" class="form-control" id="nature-select"
-                    onChange="setNature()">
+                  <select form="form-table" name="nature" class="form-control" id="nature-select" onChange="setNature()">
                     <option value="hardy">Hardy</option>
                     <option value="lonely">Lonely</option>
                     <option value="brave">Brave</option>
@@ -170,7 +174,7 @@
                   </select>
                 </td>
                 <td class="col col-sm">
-                  <select id="atk-sel" class="form-control" onChange="setNature('atk')" disabled="disabled">
+                  <select id="atk-sel" class="form-control" disabled="disabled">
                     <option class="boosting" id="atk-pos" value="1.1">
                       Boosting
                     </option>
@@ -183,7 +187,7 @@
                   </select>
                 </td>
                 <td class="col col-sm">
-                  <select id="def-sel" class="form-control" onChange="setNature('def')" disabled="disabled">
+                  <select id="def-sel" class="form-control" disabled="disabled">
                     <option class="boosting field-input" id="def-pos" value="1.1">
                       Boosting
                     </option>
@@ -196,7 +200,7 @@
                   </select>
                 </td>
                 <td class="col col-sm">
-                  <select id="spa-sel" class="form-control" onChange="setNature('spa')" disabled="disabled">
+                  <select id="spa-sel" class="form-control" disabled="disabled">
                     <option class="boosting field-input" id="spa-pos" value="1.1">
                       Boosting
                     </option>
@@ -209,7 +213,7 @@
                   </select>
                 </td>
                 <td class="col col-sm">
-                  <select id="spd-sel" class="form-control" onChange="setNature('spd')" disabled="disabled">
+                  <select id="spd-sel" class="form-control" disabled="disabled">
                     <option class="boosting field-input" id="spd-pos" value="1.1">
                       Boosting
                     </option>
@@ -222,7 +226,7 @@
                   </select>
                 </td>
                 <td class="col col-sm">
-                  <select id="spe-sel" class="form-control" onChange="setNature('spe')" disabled="disabled">
+                  <select id="spe-sel" class="form-control" disabled="disabled">
                     <option class="boosting field-input" value="1.1">
                       Boosting
                     </option>
@@ -344,6 +348,7 @@
                     <option value="16p1">x/16 + 1</option>
                     <option value="16">x/16</option>
                     <option value="10p1">x/10 + 1</option>
+                    <option value="10m1">x/10 - 1</option>
                     <option value="4p1">x/4 + 1</option>
                     <option value="4">x/4</option>
                     <option value="2p1">x/2 + 1</option>
