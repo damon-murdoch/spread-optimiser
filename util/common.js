@@ -521,7 +521,7 @@ function setNature() {
         preset.innerHTML = selectTemplate;
 
         // No jump stat, skip
-        if (selected.pos == selected.neg) continue; // Skip
+        if (selected.pos == selected.neg) break; // Skip
         // Selected spread is positive
         if (f == selected.pos) {
           // Get the jump stats for the field
