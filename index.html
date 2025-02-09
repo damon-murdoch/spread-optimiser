@@ -4,7 +4,7 @@
 
 <head>
   <!-- Webpage Title -->
-  <title>EV Spread Optimiser 2.0</title>
+  <title>EV Spread Optimiser</title>
 
   <!-- Custom Icon -->
   <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
@@ -52,7 +52,10 @@
     </div>
     <div id="body" class="container bg-dark rounded overflow-auto my-2" style="opacity: 0.8; max-height: 90vh">
       <div id="title" class="text-light text-center">
-        <h2>Pokémon EV Spread Optimiser 2.0</h2>
+        <div>
+          <h2>Pokémon EV Spread Optimiser <span class="h6 text-secondary">v2.2.0</span></h2>
+        </div>
+        
         <div class="container-fluid">
           <p class="text-muted lead">
             Developed by
@@ -79,11 +82,11 @@
           <div id="select-level" class="col col-md-auto">
             <label class="text-secondary"> Level </label>
             <input id="level" class="form-control" type="number" min="1" max="100" value="50" name="level"
-              onChange="update()" />
+              onChange="updateLevel(value)" />
           </div>
           <div id="select-ratio" class="col col-md-auto">
-            <label class="text-secondary"> HP Multiplier (%) </label>
-            <input id="ratio" class="form-control" type="number" min="1" max="100" value="50" name="ratio"
+            <label class="text-secondary"> HP Multiplier </label>
+            <input id="ratio" class="form-control" type="number" min="1" max="1.5" value="1.36" step="0.01" name="ratio"
               onChange="update()" />
           </div>
         </div>

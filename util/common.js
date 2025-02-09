@@ -222,6 +222,24 @@ function updatePreset(f) {
   update();
 }
 
+function updateLevel(lvl=50) {
+
+  // Convert level to number
+  const level = parseInt(lvl);
+
+  // Get the ratio input element
+  const ratio = document.getElementById('ratio');
+
+  // Calculate the new default hp ratio
+  const value = getHPRatio(31, 252, level);
+
+  // Update the input
+  ratio.value = value;
+
+  // General update
+  update();
+}
+
 function update() {
 
   // Set nature
@@ -604,7 +622,6 @@ function changePokemonData() {
     console.warn(`Unrecognised species: '${pokemon}'!`);
   }
 }
-
 
 function getEvSpread() {
 

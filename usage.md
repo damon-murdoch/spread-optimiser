@@ -4,7 +4,7 @@
 
 ## Instructions
 This is not a hard-and-fast list of rules for using the application, just a general
-process which I usually follow when using it. 
+process which I usually follow when using it.
 
 ### 1. Select Species
 
@@ -63,14 +63,24 @@ by 2, etc. For a table of HP stat filters and their usage, please see below.
 | x/16 + 1 | Divisible by 16, plus one | Good `Leftovers` / `Grassy Terrain` recovery, brought to just over `50%` by `Super Fang` |
 | x/16 | Divisible by 16 | Optimal `Leftovers` / `Grassy Terrain` recovery, brought to exactly `50%` health by `Super Fang` |
 | x/10 + 1 | Divisible by 10, plus one | Allows you to attack with `Life Orb` 10 times, surviving with 1 hit point left |
+| x/10 - 1 | Divisible by 10, minus one | Allows you to attack with `Life Orb` 10 times with minimal recoil damage |
 | x/4 + 1 | Divisible by 4, plus one | Allows you to use `Substitute` four times, surviving with 1 hit point left |
 | x/4 | Divisible by 4 | Recover exactly `25%` health using `Sitrus Berry`, `Super Fang` activates berry |
 | x/2 + 1 | Divisible by 2, plus one | brought to just over `50%` by `Super Fang` |
 | x/2 | Divisible by 2 | `Super Fang` activates berry |
 
-### 7. (Optional) Review Output, apply additional constraints
+
+### 8. (Optional) Review Output, apply additional constraints
 
 If you are satisfied with the spread as-is, you may skip this step.
+
+#### HP/Defense Ratio Modifier
+
+If you want to increase or decrease the HP to defensive stats ratio, you may change the 'hp multiplier' value.
+Increasing the HP multiplier will cause the resulting spread to have more HP compared to Def/Spdef, and
+decreasing it will cause the spread to have less HP comparatively.
+
+#### Min/Max. EV Constraints
 
 If you want to apply more specific constraints to one or more stats, you may increase or decrease a stat's upper
 and lower bounds manually using the input fields `min evs` and `max evs` rows. You will see the spread update in

@@ -11,19 +11,19 @@ stat points instead of 1). Speed can be constrained to a relevant benchmark (out
 252 base 100s, etc.) or can be customised to fit your own benchmarks. For more information on
 how this tool should be used, please see [usage.md](./usage.md)
 
+Please note that this application does not directly account for any meta trends or specific
+damage calculations. Please be sure to check meta trends on other platforms such as 
+[Munch Stats](https://munchstats.com/) or [Pikalytics](https://pikalytics.com/).
+
 ## Live Application
 The web address for the live application can be accessed 
 [here](https://damon-murdoch.github.io/spread-optimiser/).
 
 Link: https://damon-murdoch.github.io/spread-optimiser/
 
-## Future Changes
-A list of future planned fixes / improvements are listed below.
+## Changelog
 
-### Change Table
-| Change Description | Priority |
-| ------------------ | -------- |
-| No planned changes | -        |
+For a list of changes to the software, please see [changelog.md](changelog.md)
 
 ### Bug Fixes / Suggestions
 If you experience any issues with the application, or would like to suggest improvements

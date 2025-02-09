@@ -70,12 +70,8 @@ function selectMenuSprite(species) {
 	else if (number == 201) {
 		// Get random letter, convert it to a string (via char indexing) then upper case
 		number = parseInt(Math.random() * 26) + 65;
-		// console.log('Number: ' + number);
-
 		// Convert to a character
 		letter = String.fromCharCode(number);
-		// console.log('Letter: ' + letter);
-
 		// Set the extension to the letter
 		extension = letter;
 	}

@@ -1,15 +1,16 @@
 // Custom hp modifier
 function getHPMod() {
-  const ratio = parseInt(document.getElementById('ratio').value);
-  return 1.0 + (0.0001 * ratio);
+  // Convert the hp ratio to a float (reduce by 1)
+  const ratio = parseFloat(document.getElementById('ratio').value) - 1;
+
+  // Convert to 0.0x and add 1
+  return (ratio * 0.01) + 1;
 }
 
 // Get change in hp from e1 to e2
 function getHPDelta(b, i, e1, e2, l) {
   const d1 = hp(b, i, e1, l);
   const d2 = hp(b, i, e2, l);
-  
-  console.log(d2,d1,getHPMod());
 
   return (d2 / d1) * getHPMod();
 }

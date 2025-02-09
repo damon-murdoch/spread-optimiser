@@ -15,7 +15,7 @@
     Author: Damon Murdoch, based on Bulbapedia's conversion formula
     Date: 21/11/2019
 */
-function stat(B, I, E, L, N) {
+function stat(B, I, E, L, N = 1.0) {
   return Math.floor(
     Math.floor(
       Math.floor(
@@ -60,4 +60,19 @@ function total(B, I, E, L, N) {
   }
 
   return s;
+}
+
+function getHPRatio(ivs = 31, evs = 252, level = 50) {
+  // Get the data for mew 
+  // (All base 100 stats)
+  const species = Pokedex["mew"];
+
+  // Calculate the hp stat with the ivs, evs, level
+  const hpStat = hp(species.baseStats['hp'], ivs, evs, level);
+
+  // Calculate the defense stat with the ivs, evs, level
+  const defStat = stat(species.baseStats['def'], ivs, evs, level, 1);
+
+  // Return hp/def ratio (2 decimals)
+  return (hpStat / defStat).toFixed(2);
 }
